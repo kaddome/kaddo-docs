@@ -54,10 +54,10 @@ puts markdown.to_html
 
 Certain references are auto-linked:
 
-* SHA: a5c3785ed8d6a35868bc169f07e40e889087fd2e
-* User@SHA: jlord@a5c3785ed8d6a35868bc169f07e40e889087fd2e
-* User/Repository@SHA: jlord/sheetsee.js@a5c3785ed8d6a35868bc169f07e40e889087fd2e
-* #Num: #26
-* GH-Num: GH-26
-* User#Num: jlord#26
-* User/Repository#Num: jlord/sheetsee.js#26
+* SHA: 0d24e0fa28f1c662bab65e5eb909c23e9cf18b5d
+* User@SHA: alexfdz@0d24e0fa28f1c662bab65e5eb909c23e9cf18b5d
+* User/Repository@SHA: alexfdz/hoozad.js@0d24e0fa28f1c662bab65e5eb909c23e9cf18b5d
+* #Num: #1
+* GH-Num: GH-1
+* User#Num: alexfdz#1
+* User/Repository#Num: alexfdz/hoozad.js#1
