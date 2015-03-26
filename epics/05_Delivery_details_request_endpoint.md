@@ -5,10 +5,10 @@ As an e-commerce platform I want to requests delivery details, given a person id
 
 ## Acceptance criteria
 
-### 1 - As accepted e-commerce platform I request delivery details given a known user-locator (email)
+### 1 - As an accepted e-commerce platform I request delivery details given a known user-locator (email)
 
 **Given** an existing user *userA* with email address *userA@email.com* and delivery details *userA_delivery_details*  
-**When** an accepted e-commerce platform requests the delivery details for an user with email address *userA@email.com*  
+**When** an accepted e-commerce platform requests the delivery details for a user with email address *userA@email.com*  
 **Then** the response is a valid response containing the delivery details *userA_delivery_details*  
 
 ### 2 - As accepted e-commerce platform I request delivery details for an unknown user-locator (email)
