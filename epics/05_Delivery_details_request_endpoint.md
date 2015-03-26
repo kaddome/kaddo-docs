@@ -11,7 +11,7 @@ As an e-commerce platform I want to requests delivery details, given a person id
 **When** an accepted e-commerce platform requests the delivery details for a user with email address *userA@email.com*  
 **Then** the response is a valid response containing the delivery details *userA_delivery_details*  
 
-### 2 - As accepted e-commerce platform I request delivery details for an unknown user-locator (email)
+### 2 - As accepted e-commerce platform I request delivery details for an unknown but supported user-locator (email)
 
 **When** an accepted e-commerce platform requests the delivery details for an user with email address *unknownUser@email.com*  
 **Then** the response is a valid response containing the *processing request* response code  
@@ -20,5 +20,10 @@ As an e-commerce platform I want to requests delivery details, given a person id
 ### 3 - As non accepted e-commerce platform I request delivery details
 
 **When** an non accepted e-commerce platform requests the delivery details of any user-locator  
-**Then** the response returns an unauthorized error  
+**Then** the response is an unauthorized error
+
+### 4 - As an accepted e-commerce platform I request delivery details
+
+**When** an accepted e-commerce platform requests the delivery details of an un-supported user-locator  
+**Then** the response is an not supported user-locator error  
 
