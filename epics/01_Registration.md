@@ -1,18 +1,20 @@
 # 01 - Registration
 
 ## Description
-As a non-user I want to register to hoozad to anonymously share my delivery details to receive gifts
+As a non-registered-user I want to register to hoozad to anonymously share my delivery details to receive gifts
 
 ## Acceptance criteria
 
-### 1 - As a non-user in the registration form I want to add my email
+### 1 - As a non-registered-user in the registration form I want to add my email
 
-### 2 - As a non-user in the registration form I want to add other user-locators
+### 2 - As a non-registered-user in the registration form I want to add other user-locators
 
-### 3 - As a non-user in the registration form I want to add my delivery details
+### 3 - As a non-registered-user in the registration form I want to add my delivery details
 
-### 4 - As a non-user in the registration form I want to add a first name 
+### 4 - As a non-registered-user in the registration form I want to add a first name 
 
-### 5 - As a non-user in the registration form I want to add a surname
+### 5 - As a non-registered-user in the registration form I want to add a surname
 
-### 6 - As a non-user in the registration form I want to create a username
+### 6 - As a non-registered-user in the registration form I want to create/select a username
+
+### 7 - As a non-registered-user in the registration form I want to be able to create an account.
