@@ -1,7 +1,7 @@
 # 01 - Registration
 
 ## Description
-As a non-user I want to register to hoozad to share my delivery details to receive gifts
+As a non-user I want to register to hoozad to anonymously share my delivery details to receive gifts
 
 ## Acceptance criteria
 
