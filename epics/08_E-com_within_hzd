@@ -10,5 +10,5 @@ As a user I want to use the e-com options integrated in hzd to send a product to
 **Given** I have selected a user to send a gift to in hzd 
 **And** I have selected an e-com platform to shop from
 **When** I'm in the delivery details selection of the e-commerce platform
-**Then** I will complete my order with no site of the delivery address
+**Then** I will complete my order with no display of the delivery address
 
