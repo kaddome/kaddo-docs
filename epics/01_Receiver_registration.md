@@ -1,0 +1,14 @@
+# 01 - Receiver registration
+
+## Description
+As a non-registered-user I want to register to hoozad to anonymously share my delivery details to receive gifts
+
+## Acceptance criteria
+
+### 1 - As a non-registered-user in the registration form I want to use my Facebook account
+
+### 2 - As a non-registered-user in the registration form I want to add my delivery details
+
+### 3 - As a non-registered-user in the registration form I want to create/select a username
+
+### 4 - As a non-registered-user in the registration form I want to be able to create an account.

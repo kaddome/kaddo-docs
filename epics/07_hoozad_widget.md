@@ -18,7 +18,7 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 **And given** I have tried the hoozad widget with b@mail.com email address as user-locator  
 **When** The widget replies with "user-locator not found"  
 **Then** I set @bTwitter twitter as recipient user-locator  
-**And then** I can submit the widget  ccc
+**And then** I can submit the widget
 
 ### 3 - As buyer using the widget, if the recipient is not found, I want to send a sign-up request to the receiver
 
