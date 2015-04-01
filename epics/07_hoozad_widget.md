@@ -42,18 +42,18 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 
 ### 7 - As buyer logged-in the widget, I want to send an invite requests to users that have not joined hoozad
 
-**Given** An existing user *B* has not joined hoozad
-**When** I select *B* in the hoozad widget
-**Then** Then I can send an invitation to join hoozad to *B*
+**Given** An existing user *B* has not joined hoozad  
+**When** I select *B* in the hoozad widget  
+**Then** Then I can send an invitation to join hoozad to *B*  
 
 ### 8 - As buyer logged-in the widget, I want to send a "complete profile" requests to users that have not added delivery details to hoozad
 
-**Given** An existing user *B* has joined hoozad without delivery details
-**When** I select *B* in the hoozad widget
-**Then** Then I can send an invitation to complete the hoozad profile to *B*
+**Given** An existing user *B* has joined hoozad without delivery details  
+**When** I select *B* in the hoozad widget  
+**Then** Then I can send an invitation to complete the hoozad profile to *B*  
 
 ### 9 - As buyer logged-in the widget, I want to send a package to users with known delivery details in hoozad
 
-**Given** An existing user *B* has joined hoozad with delivery details
-**When** I select *B* in the hoozad widget
-**Then** Then I can requests *B* delivery details for the e-commerce platform
+**Given** An existing user *B* has joined hoozad with delivery details  
+**When** I select *B* in the hoozad widget  
+**Then** Then I can requests *B* delivery details for the e-commerce platform  
