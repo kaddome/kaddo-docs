@@ -9,7 +9,7 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 
 **Given** I'm in the delivery details selection of the e-commerce platform  
 **And given** I have selected the hoozad widget  
-**And given** the widget shows a button *Log-in with Facebook*  
+**And given** the widget shows a button "Log-in with Facebook"  
 **When** I click on the log-in button  
 **Then** I can use my facebook log-in details  
 **And then** a new user has been created in hoozad without delivery details or privacy restrictions  
