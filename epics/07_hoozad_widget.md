@@ -9,51 +9,66 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 
 **Given** I'm in the delivery details selection of the e-commerce platform  
 **And given** I have selected the hoozad widget  
-**And given** The widget shows a button *Log-in with Facebook*  
+**And given** the widget shows a button *Log-in with Facebook*  
 **When** I click on the log-in button  
 **Then** I can use my facebook log-in details  
-**And then** A new user has been created in hoozad without delivery details or privacy restrictions  
+**And then** a new user has been created in hoozad without delivery details or privacy restrictions  
 
 ### 2 - As buyer logged-in the widget, I see my facebook friends that have joined hoozad in receiver mode
 
-**Given** I have a facebook connection *B* that has joined hoozad in receiver mode  
+**Given** an existing user *B* has joined hoozad with delivery details 
+**And given** user *B* is a facebook connection  
 **When** I write "B" in the widget  
-**Then** A reference to my connection *B* appears in the results section  
+**Then** a reference to *B* appears in the results section  
 **And then** I can distinct that hoozad knows the delivery details of *B*  
 
 ### 3 - As buyer logged-in the widget, I see my facebook friends that have joined hoozad in sender mode
 
-**Given** I have a facebook connection *B* that has joined hoozad in sender mode  
+**Given** an existing user *B* has joined hoozad without delivery details 
+**And given** user *B* is a facebook connection  
 **When** I write "B" in the widget  
-**Then** A reference to my connection *B* appears in the results section  
+**Then** a reference to *B* appears in the results section  
 **And then** I can distinct that hoozad does not know the delivery details of *B*  
 
 ### 4 - As buyer logged-in the widget, I see my facebook friends that have not joined hoozad
 
-**Given** I have a facebook connection *B* that has not joined hoozad
+**Given** an existing user *B* has not joined hoozad  
+**And given** user *B* is a facebook connection 
 **When** I write "B" in the widget  
-**Then** A reference to my connection *B* appears in the results section  
+**Then** a reference to *B* appears in the results section  
 **And then** I can distinct that hoozad does not know the delivery details of *B*  
 
 ### 5 - As buyer logged-in the widget, I see non-facebook friends that have not joined hoozad 
 
+**Given** an existing facebook user *B* has not joined hoozad  
+**And given** user *B* is not a facebook connection 
+**When** I write "B" in the widget  
+**Then** A reference to *B* appears in the results section  
+**And then** I can distinct that hoozad does not know the delivery details of *B*  
+
 ### 6 - As buyer logged-in the widget, I see non-facebook friends that have joined hoozad without privacy restrictions
 
+**Given** an existing facebook user *B* has joined hoozad with delivery details 
+**And given** user *B* does not have privacy restrictions  
+**And given** user *B* is not a facebook connection 
+**When** I write "B" in the widget  
+**Then** a reference to *B* appears in the results section  
+**And then** I can distinct that hoozad knows the delivery details of *B*  
 
 ### 7 - As buyer logged-in the widget, I want to send an invite requests to users that have not joined hoozad
 
-**Given** An existing user *B* has not joined hoozad  
+**Given** an existing user *B* has not joined hoozad  
 **When** I select *B* in the hoozad widget  
-**Then** Then I can send an invitation to join hoozad to *B*  
+**Then** I can send an invitation to join hoozad to *B*  
 
 ### 8 - As buyer logged-in the widget, I want to send a "complete profile" requests to users that have not added delivery details to hoozad
 
-**Given** An existing user *B* has joined hoozad without delivery details  
+**Given** an existing user *B* has joined hoozad without delivery details  
 **When** I select *B* in the hoozad widget  
-**Then** Then I can send an invitation to complete the hoozad profile to *B*  
+**Then** I can send an invitation to complete the hoozad profile to *B*  
 
 ### 9 - As buyer logged-in the widget, I want to send a package to users with known delivery details in hoozad
 
-**Given** An existing user *B* has joined hoozad with delivery details  
+**Given** an existing user *B* has joined hoozad with delivery details  
 **When** I select *B* in the hoozad widget  
-**Then** Then I can requests *B* delivery details for the e-commerce platform  
+**Then** I can requests *B* delivery details for the e-commerce platform  
