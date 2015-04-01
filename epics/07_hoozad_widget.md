@@ -16,7 +16,7 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 
 ### 2 - As buyer logged-in the widget, I see my facebook friends that have joined hoozad in receiver mode
 
-**Given** an existing user *B* has joined hoozad with delivery details 
+**Given** an existing user *B* has joined hoozad with delivery details  
 **And given** user *B* is a facebook connection  
 **When** I write "B" in the widget  
 **Then** a reference to *B* appears in the results section  
@@ -24,7 +24,7 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 
 ### 3 - As buyer logged-in the widget, I see my facebook friends that have joined hoozad in sender mode
 
-**Given** an existing user *B* has joined hoozad without delivery details 
+**Given** an existing user *B* has joined hoozad without delivery details  
 **And given** user *B* is a facebook connection  
 **When** I write "B" in the widget  
 **Then** a reference to *B* appears in the results section  
@@ -33,7 +33,7 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 ### 4 - As buyer logged-in the widget, I see my facebook friends that have not joined hoozad
 
 **Given** an existing user *B* has not joined hoozad  
-**And given** user *B* is a facebook connection 
+**And given** user *B* is a facebook connection  
 **When** I write "B" in the widget  
 **Then** a reference to *B* appears in the results section  
 **And then** I can distinct that hoozad does not know the delivery details of *B*  
@@ -41,16 +41,16 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 ### 5 - As buyer logged-in the widget, I see non-facebook friends that have not joined hoozad 
 
 **Given** an existing facebook user *B* has not joined hoozad  
-**And given** user *B* is not a facebook connection 
+**And given** user *B* is not a facebook connection  
 **When** I write "B" in the widget  
 **Then** A reference to *B* appears in the results section  
 **And then** I can distinct that hoozad does not know the delivery details of *B*  
 
 ### 6 - As buyer logged-in the widget, I see non-facebook friends that have joined hoozad without privacy restrictions
 
-**Given** an existing facebook user *B* has joined hoozad with delivery details 
+**Given** an existing facebook user *B* has joined hoozad with delivery details  
 **And given** user *B* does not have privacy restrictions  
-**And given** user *B* is not a facebook connection 
+**And given** user *B* is not a facebook connection  
 **When** I write "B" in the widget  
 **Then** a reference to *B* appears in the results section  
 **And then** I can distinct that hoozad knows the delivery details of *B*  
