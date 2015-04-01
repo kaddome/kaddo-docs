@@ -5,17 +5,23 @@ As an e-commerce platform I want to requests delivery details, given a person id
 
 ## Acceptance criteria
 
-### 1 - As an accepted e-commerce platform I request delivery details given a known FB account
+### 1 - As an accepted e-commerce platform I request delivery details given a known user with delivery details
 
-**Given** an existing user *userA* with FB account *userA_fb* and delivery details *userA_delivery_details*  
-**When** an accepted e-commerce platform requests the delivery details for a user with email address *userA_fb*  
+**Given** an existing hoozad user with facebook account *userA_fb* and delivery details *userA_delivery_details*  
+**When** an accepted e-commerce platform requests the delivery details for a user with facebook account *userA_fb*  
 **Then** the response is a valid response containing the delivery details *userA_delivery_details*  
 
-### 2 - As accepted e-commerce platform I request delivery details for an unknown FB account
+### 2 - As an accepted e-commerce platform I request delivery details given a known user without delivery details
 
-**When** an accepted e-commerce platform requests the delivery details for an user with FB account *unknownUser_fb*  
-**Then** the response is a valid response containing the *processing request* response code  
-**And then** the app will send a sign-up request to *unknownUser_fb* as defined in [epic#06 Sign-up request communications](06_Sign_up_request_communications.md)  
+**Given** an existing hoozad user with facebook account *userA_fb* without delivery details  
+**When** an accepted e-commerce platform requests the delivery details for a user with facebook account *userA_fb*  
+**Then** the response is an error response "User without delivery details found"  
+
+### 3 - As accepted e-commerce platform I request delivery details for an unknown user
+
+**Given** an unknown facebook user with account *userA_fb*  
+**When** an accepted e-commerce platform requests the delivery details for an user with facebook account *userA_fb*  
+**Then** the response is an error response "User not found"  
 
 ### 3 - As non accepted e-commerce platform I request delivery details
 
