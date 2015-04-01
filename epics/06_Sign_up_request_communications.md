@@ -1,7 +1,7 @@
 # 06 - sign-up requests communications
 
 ## Description
-As the hoozad app, when a delivery details request for an unknown person is received, the platform will try to contact the person with a sign-up request
+As sender using the hoozad widget, when I select a nonexistent hoozad user I can send a sign-up request to the user.
 
 ## Acceptance criteria
 
