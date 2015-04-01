@@ -9,10 +9,10 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 
 **Given** I'm in the delivery details selection of the e-commerce platform  
 **And given** I have selected the hoozad widget  
-**And given** The widget shows a button *Log-in with Facebook*
-**When** I click on the log-in button
-**Then** I can use my facebook log-in details
-**And then** A new user has been created in hoozad without delivery details or privacy restrictions
+**And given** The widget shows a button *Log-in with Facebook*  
+**When** I click on the log-in button  
+**Then** I can use my facebook log-in details  
+**And then** A new user has been created in hoozad without delivery details or privacy restrictions  
 
 ### 2 - As buyer logged-in the widget, I see my facebook friends that have joined hoozad in receiver mode
 
