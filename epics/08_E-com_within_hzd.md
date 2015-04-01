@@ -1,5 +1,9 @@
 # 08 - e-commerce within hzd
 
+```
+NOT IN PILOT SCOPE
+```
+
 ## Description
 As a user I want to use the e-com options integrated in hzd to send a product to a person from whom I do not know the delivery details
 

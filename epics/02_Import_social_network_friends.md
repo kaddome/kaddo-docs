@@ -1,5 +1,9 @@
 # 02 - Import social network friends
 
+```
+NOT IN PILOT SCOPE
+```
+
 ## Description
 As a user I want to encourage more users to join by importing contacts from my social network
 
