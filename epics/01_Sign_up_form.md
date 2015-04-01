@@ -1,4 +1,4 @@
-# 01 - Receiver registration
+# 01 - Sign-up form
 
 ## Description
 As a non-registered-user I want to register to hoozad to anonymously share my delivery details to receive gifts
