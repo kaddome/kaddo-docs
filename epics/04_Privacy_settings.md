@@ -19,9 +19,9 @@ As a user I want to edit my privacy settings to be more specific about who can r
 
 ### X - As a user I have registered to only receive gifts from Hoozad friends
 ```
-Do we need this? Does make sense?
+Do we need this? Does make sense? (Question #7)
 ```
 ### X - As a user I have registered to not receive gifts but to only send
 ```
-How can we avoid this scenario??
+How can we avoid this scenario?? (Issue #7)
 ```
