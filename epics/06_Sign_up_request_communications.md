@@ -20,5 +20,5 @@ As sender using the hoozad widget, when I select a nonexistent hoozad user I can
 ### 3 - As non-registered-user I accept the sign-up request
 
 **Given** an existing hoozad user A sends a sign-up request to a non-existing hoozad user B  
-**When** B accepts the sign-up request and fills the sign-up form  
-**Then** A receives a notification stating that B delivery details are available 
+**When** B accepts the sign-up request and fills the sign-up form   
+**Then** A receives a notification stating that B delivery details are available  
