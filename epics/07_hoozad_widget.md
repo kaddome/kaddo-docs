@@ -55,7 +55,7 @@ As buyer I want to use the hoozad widget integrated in a e-commerce platform to 
 **Then** a reference to *B* appears in the results section  
 **And then** I can distinct that hoozad knows the delivery details of *B*  
 
-### 7 - As buyer logged-in the widget, I want to send an invite requests to users that have not joined hoozad
+### 7 - As buyer logged-in the widget, I want to send an invite request to user that has not joined hoozad
 
 **Given** an existing user *B* has not joined hoozad  
 **When** I select *B* in the hoozad widget  
