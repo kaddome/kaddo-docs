@@ -5,13 +5,13 @@ As an e-commerce platform I want to requests delivery details, given a person id
 
 ## Acceptance criteria
 
-### 1 - As an accepted e-commerce platform I request delivery details given a known user with delivery details
+### 1 - As an accepted e-commerce platform I request delivery details of a known user with delivery details
 
 **Given** an existing hoozad user with facebook account *userA_fb* and delivery details *userA_delivery_details*  
 **When** an accepted e-commerce platform requests the delivery details for a user with facebook account *userA_fb*  
 **Then** the response is a valid response containing the delivery details *userA_delivery_details*  
 
-### 2 - As an accepted e-commerce platform I request delivery details given a known user without delivery details
+### 2 - As an accepted e-commerce platform I request delivery details of a known user without delivery details
 
 **Given** an existing hoozad user with facebook account *userA_fb* without delivery details  
 **When** an accepted e-commerce platform requests the delivery details for a user with facebook account *userA_fb*  
