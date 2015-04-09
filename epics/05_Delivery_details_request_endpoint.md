@@ -31,4 +31,4 @@ As an e-commerce platform I want to requests delivery details, given a person id
 ### 4 - As accepted e-commerce platform I request delivery details for a nonexistent FB account
 
 **When** an accepted e-commerce platform requests the delivery details for an user with FB account *nonexistentUser_fb*  
-**Then** the response is a *not found* error
+**Then** the response is a *not found* error 
