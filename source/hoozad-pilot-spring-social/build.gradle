@@ -8,6 +8,16 @@ buildscript {
   }
 }
 
+plugins {
+  id "com.moowork.grunt" version "0.9"
+}
+
+node {
+  version = '0.10.32'
+  npmVersion = '1.4.26'
+  download = true
+}
+
 apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'spring-boot'
@@ -41,3 +51,12 @@ dependencies {
 task wrapper(type: Wrapper) {
   gradleVersion = '2.0'
 }
+
+// makes sure on each build that grunt is installed
+grunt_build.dependsOn 'installGrunt'
+
+// processes your package.json before running grunt build
+grunt_build.dependsOn 'npmInstall'
+
+// runs "grunt build" as part of your gradle build
+build.dependsOn grunt_build
