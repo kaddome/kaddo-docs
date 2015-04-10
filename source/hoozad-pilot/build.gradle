@@ -8,6 +8,7 @@ buildscript {
   }
 }
 
+apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
@@ -38,5 +39,5 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+  gradleVersion = '2.0'
 }
