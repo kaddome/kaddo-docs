@@ -7,8 +7,7 @@ angular.module('hoozadApp')
                 parent: 'admin',
                 url: '/health',
                 data: {
-                    roles: ['ROLE_ADMIN'],
-                    pageTitle: 'health.title'
+                    roles: ['ROLE_ADMIN']
                 },
                 views: {
                     'content@': {

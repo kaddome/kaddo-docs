@@ -1,13 +1,14 @@
 package com.hoozad.pilot.service;
 
 import com.hoozad.pilot.domain.Authority;
-import com.hoozad.pilot.domain.PersistentToken;
+import com.hoozad.pilot.domain.ExternalAccount;
 import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.AuthorityRepository;
 import com.hoozad.pilot.repository.PersistentTokenRepository;
 import com.hoozad.pilot.repository.UserRepository;
 import com.hoozad.pilot.security.SecurityUtils;
 import com.hoozad.pilot.service.util.RandomUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -56,28 +57,56 @@ public class UserService {
         return Optional.empty();
     }
 
-    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
-                                      String langKey) {
+    void checkForDuplicateUser(User user) {
+
+        if (userRepository.findOneByLogin(user.getLogin()).isPresent()) {
+            throw new RegistrationException("login already in use");
+        } else if (userRepository.findOneByEmail(user.getEmail()).isPresent()) {
+            new RegistrationException("e-mail address already in use");
+        }
+    }
+
+    User createUserInformation(String login, String password, String firstName, String lastName,
+                               String email, String langKey, ExternalAccount externalAccount) {
         User newUser = new User();
         Authority authority = authorityRepository.findOne("ROLE_USER");
         Set<Authority> authorities = new HashSet<>();
-        String encryptedPassword = passwordEncoder.encode(password);
+        authorities.add(authority);
+        newUser.setAuthorities(authorities);
+
+        if (StringUtils.isNotBlank(password)) {
+            String encryptedPassword = passwordEncoder.encode(password);
+            newUser.setPassword(encryptedPassword);
+        } else {
+            newUser.getExternalAccounts().add(externalAccount);
+//            externalAccount.setUser(newUser);
+        }
+
         newUser.setLogin(login);
-        // new user gets initially a generated password
-        newUser.setPassword(encryptedPassword);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
         newUser.setLangKey(langKey);
+
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
-        authorities.add(authority);
-        newUser.setAuthorities(authorities);
+
+        checkForDuplicateUser(newUser);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
+    }
+
+    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
+                                      String langKey) {
+        return createUserInformation(login, password, firstName, lastName, email, langKey, null);
+    }
+
+    public User createUserInformation(String login, String firstName, String lastName, String email,
+                                      String langKey, ExternalAccount externalAccount) {
+        return createUserInformation(login, null, firstName, lastName, email, langKey, externalAccount);
     }
 
     public void updateUserInformation(String firstName, String lastName, String email) {
@@ -91,7 +120,7 @@ public class UserService {
     }
 
     public void changePassword(String password) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u-> {
+        userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
             String encryptedPassword = passwordEncoder.encode(password);
             u.setPassword(encryptedPassword);
             userRepository.save(u);
@@ -116,7 +145,7 @@ public class UserService {
     @Scheduled(cron = "0 0 0 * * ?")
     public void removeOldPersistentTokens() {
         LocalDate now = new LocalDate();
-        persistentTokenRepository.findByTokenDateBefore(now.minusMonths(1)).stream().forEach(token ->{
+        persistentTokenRepository.findByTokenDateBefore(now.minusMonths(1)).stream().forEach(token -> {
             log.debug("Deleting token {}", token.getSeries());
             persistentTokenRepository.delete(token);
         });

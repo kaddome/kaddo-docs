@@ -6,7 +6,6 @@
             "home": "Home",
             "entities": {
                 "main": "Entities",
-                "foo": "Foo",
                 "additionalEntity": "JHipster will add addtional entities"
             },
             "account": {
@@ -14,21 +13,18 @@
                 "settings": "Settings",
                 "password": "Password",
                 "sessions": "Sessions",
-                "login": "Authenticate",
-                "logout": "Log out",
-                "register": "Register"
-            },
-            "admin": {
-                "main": "Administration",
                 "tracker": "User tracker",
                 "metrics": "Metrics",
                 "health": "Health",
                 "configuration": "Configuration",
                 "logs": "Logs",
                 "audits": "Audits",
+                "login": "Authenticate",
+                "logout": "Log out",
                 "apidocs": "API",
-                "database": "Database"
+                "register": "Register"
             },
+            "admin": "Administration",
             "language": "Language"
         },
         "form": {
@@ -52,49 +48,22 @@
             "validate": {
                 "newpassword": {
                     "required": "Your password is required.",
-                    "minlength": "Your password is required to be at least 5 characters.",
-                    "maxlength": "Your password cannot be longer than 50 characters.",
+                    "minlength": "Your password is required to be at least 5 characters",
+                    "maxlength": "Your password cannot be longer than 50 characters",
                     "strength": "Password strength:"
                 },
                 "confirmpassword": {
                     "required": "Your confirmation password is required.",
-                    "minlength": "Your confirmation password is required to be at least 5 characters.",
-                    "maxlength": "Your confirmation password cannot be longer than 50 characters."
+                    "minlength": "Your confirmation password is required to be at least 5 characters",
+                    "maxlength": "Your confirmation password cannot be longer than 50 characters"
                 },
                 "email": {
                     "required": "Your e-mail is required.",
                     "invalid": "Your e-mail is invalid.",
-                    "minlength": "Your e-mail is required to be at least 5 characters.",
-                    "maxlength": "Your e-mail cannot be longer than 50 characters."
+                    "minlength": "Your e-mail is required to be at least 5 characters",
+                    "maxlength": "Your e-mail cannot be longer than 50 characters"
                 }
             }
-        }
-    },
-    "entity": {
-        "action": {
-            "back": "Back",
-            "cancel": "Cancel",
-            "delete": "Delete",
-            "edit": "Edit",
-            "save": "Save",
-            "view": "View"
-        },
-        "detail": {
-            "field": "Field",
-            "value": "Value"
-        },
-        "delete": {
-            "title": "Confirm delete operation"
-        },
-        "validation": {
-            "required": "This field is required.",
-            "minlength": "This field is required to be at least {{min}} characters.",
-            "maxlength": "This field cannot be longer than {{max}} characters.",
-            "min": "This field should be more than {{min}}.",
-            "max": "This field cannot be more than {{max}}.",
-            "pattern": "This field should follow pattern {{pattern}}.",
-            "number": "This field should be a number.",
-            "datetimelocal": "This field should be a date and time."
         }
     },
     "footer": "This is your footer"

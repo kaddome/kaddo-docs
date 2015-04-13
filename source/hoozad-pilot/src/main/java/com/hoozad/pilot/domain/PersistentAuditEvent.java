@@ -17,7 +17,7 @@ public class PersistentAuditEvent  {
 
     @Id
     @Field("event_id")
-    private String id;
+    private long id;
 
     @NotNull
     private String principal;
@@ -28,11 +28,11 @@ public class PersistentAuditEvent  {
 
     private Map<String, String> data = new HashMap<>();
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

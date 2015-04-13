@@ -13,7 +13,7 @@ angular.module('hoozadApp')
                 return _authenticated;
             },
             isInRole: function (role) {
-                if (!_authenticated || !_identity || !_identity.roles) {
+                if (!_authenticated || !_identity.roles) {
                     return false;
                 }
 

@@ -1,6 +1,4 @@
 README for hoozad
 ==========================
 
-
-
-sudo npm install -g bower
+gradle installGrunt grunt_build bootRun

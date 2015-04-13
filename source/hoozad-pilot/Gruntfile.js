@@ -1,18 +1,27 @@
-// Generated on 2015-04-10 using generator-jhipster 2.7.0
+// Generated on 2015-04-13 using generator-jhipster 1.10.0
 'use strict';
-var fs = require('fs');
 
-// Returns the first occurence of the version number
-var parseVersionFromBuildGradle = function() {
-    var versionRegex = /^version\s*=\s*[',"]([^',"]*)[',"]/gm; // Match and group the version number
-    var buildGradle = fs.readFileSync('build.gradle', "utf8");
-    return versionRegex.exec(buildGradle)[1];
-};
+var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
 
 // usemin custom step
+var path = require('path');
 var useminAutoprefixer = {
     name: 'autoprefixer',
-    createConfig: require('grunt-usemin/lib/config/cssmin').createConfig // Reuse cssmins createConfig
+    createConfig: function(context, block) {
+        var cfg = { files: [] };
+        var outfile = path.join(context.outDir, block.dest);
+
+        var files = {};
+        files.dest = outfile;
+        files.src = [];
+        context.inFiles.forEach(function (f) {
+            files.src.push(path.join(context.inDir, f));
+        });
+        cfg.files.push(files);
+        context.outFiles = [block.dest];
+
+        return cfg;
+    }
 };
 
 module.exports = function (grunt) {
@@ -26,16 +35,20 @@ module.exports = function (grunt) {
             dist: 'src/main/webapp/dist'
         },
         watch: {
-            bower: {
-                files: ['bower.json'],
-                tasks: ['wiredep']
-            },
-            ngconstant: {
-                files: ['Gruntfile.js', 'build.gradle'],
-                tasks: ['ngconstant:dev']
-            },
             styles: {
                 files: ['src/main/webapp/assets/styles/**/*.css']
+            },
+            livereload: {
+                options: {
+                    livereload: 35729
+                },
+                files: [
+                    'src/main/webapp/**/*.html',
+                    'src/main/webapp/**/*.json',
+                    '{.tmp/,}src/main/webapp/assets/styles/**/*.css',
+                    '{.tmp/,}src/main/webapp/scripts/**/*.js',
+                    'src/main/webapp/assets/images/**/*.{png,jpg,jpeg,gif,webp,svg}'
+                ]
             }
         },
         autoprefixer: {
@@ -50,47 +63,101 @@ module.exports = function (grunt) {
         //        }]
         //    }
         },
-        wiredep: {
-            app: {
-                src: ['src/main/webapp/index.html'],
-                exclude: [
-                    /angular-i18n/,  // localizations are loaded dynamically
-                    /swagger-ui/
-                ]
+        connect: {
+            proxies: [
+                {
+                    context: '/api',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                },
+                {
+                    context: '/metrics',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                },
+                {
+                    context: '/dump',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                },
+                {
+                    context: '/health',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                },
+                {
+                    context: '/configprops',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                },
+                {
+                    context: '/beans',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                },
+                {
+                    context: '/api-docs',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                },
+                 {
+                    context: '/auth',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false
+                 }
+            ],
+            options: {
+                port: 9000,
+                // Change this to 'localhost' to deny access to the server from outside.
+                hostname: '0.0.0.0',
+                livereload: 35729
             },
-            test: {
-                src: 'src/test/javascript/karma.conf.js',
-                exclude: [/angular-i18n/, /swagger-ui/, /angular-scenario/],
-                ignorePath: /\.\.\/\.\.\//, // remove ../../ from paths of injected javascripts
-                devDependencies: true,
-                fileTypes: {
-                    js: {
-                        block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
-                        detect: {
-                            js: /'(.*\.js)'/gi
-                        },
-                        replace: {
-                            js: '\'{{filePath}}\','
-                        }
+            livereload: {
+                options: {
+                    open: true,
+                    base: [
+                        '.tmp',
+                        'src/main/webapp'
+                    ],
+                    middleware: function (connect) {
+                        return [
+                            proxySnippet,
+                            connect.static('.tmp'),
+                            connect.static('src/main/webapp')
+                        ];
                     }
                 }
-            }
-        },
-        browserSync: {
-            dev: {
-                bsFiles: {
-                    src : [
-                        'src/main/webapp/**/*.html',
-                        'src/main/webapp/**/*.json',
-                        '{.tmp/,}src/main/webapp/assets/styles/**/*.css',
-                        '{.tmp/,}src/main/webapp/scripts/**/*.js',
-                        'src/main/webapp/assets/images/**/*.{png,jpg,jpeg,gif,webp,svg}'
+            },
+            test: {
+                options: {
+                 port: 9001,
+                    base: [
+                        '.tmp',
+                        'test',
+                        'src/main/webapp'
                     ]
                 }
             },
-            options: {
-                watchTask: true,
-                proxy: "localhost:8080"
+            dist: {
+                options: {
+                    base: '<%= yeoman.dist %>'
+                }
             }
         },
         clean: {
@@ -166,7 +233,7 @@ module.exports = function (grunt) {
                     html: {
                         steps: {
                             js: ['concat', 'uglifyjs'],
-                            css: ['cssmin', useminAutoprefixer] // Let cssmin concat files so it corrects relative paths to fonts and images
+                            css: ['concat', useminAutoprefixer, 'cssmin']
                         },
                             post: {}
                         }
@@ -219,9 +286,6 @@ module.exports = function (grunt) {
             //         ]
             //     }
             // }
-            options: {
-                root: 'src/main/webapp' // Replace relative paths for static resources with absolute path
-            }
         },
         ngtemplates:    {
             dist: {
@@ -278,7 +342,7 @@ module.exports = function (grunt) {
                     src: [
                         '*.html',
                         'scripts/**/*.html',
-                        'assets/images/**/*.{png,gif,webp,jpg,jpeg,svg}',
+                        'assets/images/**/*.{png,gif,webp}',
                         'assets/fonts/*'
                     ]
                 }, {
@@ -338,6 +402,26 @@ module.exports = function (grunt) {
                 }]
             }
         },
+        replace: {
+            dist: {
+                src: ['<%= yeoman.dist %>/index.html'],
+                    overwrite: true,                                 // overwrite matched source files
+                    replacements: [{
+                        from: '<div class="development"></div>',
+                        to: ''
+                    }]
+                }
+            },
+        uglify: {
+        // not used since Uglify task does uglify
+        //    dist: {
+        //     files: {
+        //            '<%= yeoman.dist %>/scripts/scripts.js': [
+        //                '<%= yeoman.dist %>/scripts/scripts.js'
+        //            ]
+        //        }
+        //    }
+        },
         buildcontrol: {
             options: {
                 commit: true,
@@ -359,68 +443,41 @@ module.exports = function (grunt) {
                     branch: 'master'
                 }
             }
-        },
-        ngconstant: {
-            options: {
-                name: 'hoozadApp',
-                deps: false,
-                wrap: '"use strict";\n// DO NOT EDIT THIS FILE, EDIT THE GRUNT TASK NGCONSTANT SETTINGS INSTEAD WHICH GENERATES THIS FILE\n{%= __ngModule %}'
-            },
-            dev: {
-                options: {
-                    dest: 'src/main/webapp/scripts/app/app.constants.js'
-                },
-                constants: {
-                    ENV: 'dev',
-                    VERSION: parseVersionFromBuildGradle()
-                }
-            },
-            prod: {
-                options: {
-                    dest: '.tmp/scripts/app/app.constants.js'
-                },
-                constants: {
-                    ENV: 'prod',
-                    VERSION: parseVersionFromBuildGradle()
-                }
-            }
         }
     });
 
-    grunt.registerTask('serve', [
-        'clean:server',
-        'wiredep',
-        'ngconstant:dev',
-        'concurrent:server',
-        'browserSync',
-        'watch'
-    ]);
-
     grunt.registerTask('server', function (target) {
-        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-        grunt.task.run([target ? ('serve:' + target) : 'serve']);
+        if (target === 'dist') {
+            return grunt.task.run(['build', 'connect:dist:keepalive']);
+        }
+
+        grunt.task.run([
+            'clean:server',
+            'concurrent:server',
+            'configureProxies',
+            'connect:livereload',
+            'watch'
+        ]);
     });
 
     grunt.registerTask('test', [
         'clean:server',
-        'wiredep:test',
-        'ngconstant:dev',
         'concurrent:test',
+        'connect:test',
         'karma'
     ]);
 
     grunt.registerTask('build', [
         'clean:dist',
-        'wiredep:app',
-        'ngconstant:prod',
         'useminPrepare',
         'ngtemplates',
         'concurrent:dist',
         'concat',
+        'autoprefixer',
         'copy:dist',
         'ngAnnotate',
         'cssmin',
-        'autoprefixer',
+        'replace',
         'uglify',
         'rev',
         'usemin',

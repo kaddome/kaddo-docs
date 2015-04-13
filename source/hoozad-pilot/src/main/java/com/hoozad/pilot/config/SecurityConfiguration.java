@@ -1,14 +1,14 @@
 package com.hoozad.pilot.config;
 
 import com.hoozad.pilot.security.*;
+import com.hoozad.pilot.security.social.SocialLoginExceptionMapper;
 import com.hoozad.pilot.web.filter.CsrfCookieGeneratorFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 
-import org.springframework.data.repository.query.spi.EvaluationContextExtension;
-import org.springframework.data.repository.query.spi.EvaluationContextExtensionSupport;
-import org.springframework.security.access.expression.SecurityExpressionRoot;
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
@@ -16,20 +16,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
-
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.social.security.SocialAuthenticationException;
+import org.springframework.social.security.SocialAuthenticationFilter;
+import org.springframework.social.security.SpringSocialConfigurer;
+
 
 import javax.inject.Inject;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Inject
@@ -65,6 +65,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * Build a configurer that can be applied to an HttpSecurity instance. When the configurer is applied,
+     * Spring Social Security's {@link org.springframework.social.security.SocialAuthenticationFilter}
+     * will be added to the HttpSecurity's SecurityFilterChain.
+     *
+     * @return
+     */
+    protected SpringSocialConfigurer buildSpringSocialConfigurer() {
+        // build an AuthenticationFailureHandler that is aware of our own exception types
+        final SocialLoginExceptionMapper handler = new SocialLoginExceptionMapper("/#/register/external")
+            .add(SocialAuthenticationException.class, "/#/register/external/rejected")
+            .add(UserNotActivatedException.class, "/#/activate");
+
+        SpringSocialConfigurer configurer = new SpringSocialConfigurer()
+            .postLoginUrl("/")
+            .alwaysUsePostLoginUrl(true);
+
+        // configure options not available using the standard configurer
+        configurer.addObjectPostProcessor(
+            new ObjectPostProcessor<SocialAuthenticationFilter>() {
+                public SocialAuthenticationFilter postProcess(SocialAuthenticationFilter object) {
+                    // replace the default exception
+                    object.setAuthenticationFailureHandler(handler);
+
+                    object.setSignupUrl("/#/register/external");
+                    return object;
+                }
+            }
+        );
+
+        return configurer;
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
@@ -79,9 +112,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf()
-            .ignoringAntMatchers("/websocket/**")
-        .and()
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
             .authenticationEntryPoint(authenticationEntryPoint)
@@ -101,37 +131,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .logout()
             .logoutUrl("/api/logout")
             .logoutSuccessHandler(ajaxLogoutSuccessHandler)
-            .deleteCookies("JSESSIONID")
+            .deleteCookies("JSESSIONID", "hazelcast.sessionId", "CSRF-TOKEN")
             .permitAll()
+        .and()
+            .apply(buildSpringSocialConfigurer())
         .and()
             .headers()
             .frameOptions()
             .disable()
-        .and()
             .authorizeRequests()
-            .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/activate").permitAll()
-            .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/dump/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/shutdown/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/beans/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/configprops/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/info/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/autoconfig/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/env/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/protected/**").authenticated();
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/dump/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/shutdown/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/beans/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/configprops/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/info/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/autoconfig/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/env/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/protected/**").authenticated();
 
     }
 
-    @Bean
-    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
-        return new SecurityEvaluationContextExtension();
+    @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
+    private static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
     }
 }

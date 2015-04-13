@@ -7,8 +7,7 @@ angular.module('hoozadApp')
                 parent: 'site',
                 url: '/error',
                 data: {
-                    roles: [],
-                    pageTitle: 'errors.title'
+                    roles: []
                 },
                 views: {
                     'content@': {

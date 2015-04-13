@@ -6,7 +6,7 @@ security.basic.enabled: false
 endpoints.jolokia.enabled: false
 
 # security configuration (this key should be unique for your application, and kept secret)
-jhipster.security.rememberme.key: 2acd8f88d42743ac894399c1b281ae3bc96107a6
+jhipster.security.rememberme.key: hoozad
 
 async:
     corePoolSize: 2
@@ -26,6 +26,13 @@ spring:
 
     messageSource:
         cacheSeconds: 1
+
+    social:
+        facebook:
+                 clientId: 342991509228104
+                 clientSecret: ad857bfa04eeb269960c66b4e9bae6ad
+
+
 
 swagger:
     title: hoozad API

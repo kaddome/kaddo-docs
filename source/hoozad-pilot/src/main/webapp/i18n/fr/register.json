@@ -2,6 +2,10 @@
     "register": {
         "title": "Création de compte utilisateur",
         "form": {
+            "external": {
+                "confirm": "TODO",
+                "chooseLogin" : "TODO"
+            },
             "button": "Enregistrement"
         },
         "messages": {

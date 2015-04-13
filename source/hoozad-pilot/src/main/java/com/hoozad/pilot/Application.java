@@ -14,15 +14,13 @@ import org.springframework.core.env.SimpleCommandLinePropertySource;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 public class Application {
 
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Inject
     private Environment env;
@@ -45,7 +43,7 @@ public class Application {
     /**
      * Main method, used to run the application.
      */
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Application.class);
         app.setShowBanner(false);
 
@@ -54,14 +52,7 @@ public class Application {
         // Check if the selected profile has been set as argument.
         // if not the development profile will be added
         addDefaultProfile(app, source);
-        Environment env = app.run(args).getEnvironment();
-        log.info("Access URLs:\n----------------------------------------------------------\n\t" +
-            "Local: \t\thttp://127.0.0.1:{}\n\t" +
-            "External: \thttp://{}:{}\n----------------------------------------------------------",
-            env.getProperty("server.port"),
-            InetAddress.getLocalHost().getHostAddress(),
-            env.getProperty("server.port"));
-
+        app.run(args);
     }
 
     /**

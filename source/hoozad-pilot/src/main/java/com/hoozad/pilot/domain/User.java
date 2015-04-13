@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -23,25 +22,23 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String id;
 
     @NotNull
-    @Pattern(regexp = "^[a-z0-9]*$")
-    @Size(min = 1, max = 50)
+    @Size(min = 0, max = 50)
     private String login;
 
     @JsonIgnore
-    @NotNull
-    @Size(min = 5, max = 100)
+    @Size(min = 0, max = 100)
     private String password;
 
-    @Size(max = 50)
+    @Size(min = 0, max = 50)
     @Field("first_name")
     private String firstName;
 
-    @Size(max = 50)
+    @Size(min = 0, max = 50)
     @Field("last_name")
     private String lastName;
 
     @Email
-    @Size(max = 100)
+    @Size(min = 0, max = 100)
     private String email;
 
     private boolean activated = false;
@@ -50,12 +47,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("lang_key")
     private String langKey;
 
-    @Size(max = 20)
+    @Size(min = 0, max = 20)
     @Field("activation_key")
     private String activationKey;
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
+    private Set<PersistentToken> persistentTokens = new HashSet<>();
 
     public String getId() {
         return id;
@@ -64,6 +62,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    
+    private Set<ExternalAccount> externalAccounts = new HashSet<>();
+    
 
     public String getLogin() {
         return login;
@@ -137,6 +139,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
+    
+    public Set<ExternalAccount> getExternalAccounts() {
+        return externalAccounts;
+    }
+
+    public void setExternalAccounts(Set<ExternalAccount> externalAccountIds) {
+        this.externalAccounts = externalAccountIds;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -171,6 +182,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
                 ", activated='" + activated + '\'' +
                 ", langKey='" + langKey + '\'' +
                 ", activationKey='" + activationKey + '\'' +
+                ", externalAccounts=" + externalAccounts +
                 "}";
     }
 }

@@ -4,17 +4,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE')
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.0.RELEASE')
         classpath('com.moowork.gradle:gradle-node-plugin:0.8')
-        
         classpath('com.moowork.gradle:gradle-grunt-plugin:0.6')
-        
+        classpath('be.filipblondeel.gradle:gradle-gulp-plugin:0.1')
     }
 }
 
 apply plugin: 'java'
-sourceCompatibility=1.8
-targetCompatibility=1.8
 apply plugin: 'maven'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
@@ -27,21 +24,20 @@ springBoot {
     mainClass = 'com.hoozad.pilot.Application'
 }
 
-bootRun {
-    addResources = false
-}
-
 apply from: 'yeoman.gradle'
 
-
-apply from: 'gatling.gradle'
-
 if (project.hasProperty('prod')) {
-    apply from: 'profile_prod.gradle'
+    profile = 'prod'
 } else if (project.hasProperty('fast')) {
+    profile = 'fast'
+}
+
+if (profile == 'prod') {
+    apply from: 'profile_prod.gradle'
+} else if (profile == 'fast') {
     apply from: 'profile_fast.gradle'
 } else {
-  apply from: 'profile_dev.gradle'
+    apply from: 'profile_dev.gradle'
 }
 
 group = 'com.hoozad.pilot'
@@ -51,6 +47,11 @@ description = ''
 
 configurations {
     providedRuntime
+}
+
+war {
+    baseName = 'hoozad'
+    version =  '0.1-SNAPSHOT'
 }
 
 repositories {
@@ -63,53 +64,48 @@ repositories {
 }
 
 dependencies {
-    compile group: 'io.dropwizard.metrics', name: 'metrics-core'
-    compile group: 'io.dropwizard.metrics', name: 'metrics-graphite'
-    compile group: 'io.dropwizard.metrics', name: 'metrics-healthchecks'
-    compile group: 'io.dropwizard.metrics', name: 'metrics-jvm', version: dropwizard_metrics_version
-    compile group: 'io.dropwizard.metrics', name: 'metrics-servlet', version: dropwizard_metrics_version
-    compile group: 'io.dropwizard.metrics', name: 'metrics-json', version: dropwizard_metrics_version
-    compile group: 'io.dropwizard.metrics', name: 'metrics-servlets'
-
+    compile group: 'com.codahale.metrics', name: 'metrics-core', version: codahale_metrics_version
+    compile group: 'com.codahale.metrics', name: 'metrics-graphite', version: codahale_metrics_version
+    compile group: 'com.codahale.metrics', name: 'metrics-jvm', version: codahale_metrics_version
+    compile group: 'com.codahale.metrics', name: 'metrics-servlet', version: codahale_metrics_version
+    compile group: 'com.codahale.metrics', name: 'metrics-json', version: codahale_metrics_version
+    compile(group: 'com.codahale.metrics', name: 'metrics-servlets', version: codahale_metrics_version) {
+        exclude(module: 'metrics-healthchecks')
+    }
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-json-org', version: jackson_version
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hppc', version: jackson_version
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-joda'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-joda', version: jackson_version
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate4', version: jackson_version
-    compile (group: 'com.ryantenney.metrics', name: 'metrics-spring', version: metrics_spring_version) {
-        exclude(module: 'metrics-core')
-        exclude(module: 'metrics-healthchecks')
-    } 
-    compile(group: 'com.zaxxer', name: 'HikariCP') {
+    compile group: 'com.ryantenney.metrics', name: 'metrics-spring', version: metrics_spring_version
+    compile(group: 'com.zaxxer', name: 'HikariCP', version: HikariCP_version) {
         exclude(module: 'tools')
     }
     compile group: 'commons-lang', name: 'commons-lang', version: commons_lang_version
     compile group: 'commons-io', name: 'commons-io', version: commons_io_version
     compile group: 'javax.inject', name: 'javax.inject', version: javax_inject_version
-    compile group: 'javax.transaction', name: 'javax.transaction-api'
-    compile group: 'joda-time', name: 'joda-time'
+    compile group: 'joda-time', name: 'joda-time', version: joda_time_version
     compile group: 'org.apache.geronimo.javamail', name: 'geronimo-javamail_1.4_mail', version: geronimo_javamail_1_4_mail_version
-    compile group: 'org.hibernate', name: 'hibernate-validator'
-    compile group: 'org.springframework.boot', name: 'spring-boot-actuator'
-    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure'
-    compile group: 'org.springframework.boot', name: 'spring-boot-loader-tools'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: hibernate_validator_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-actuator', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-loader-tools', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: spring_boot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: spring_boot_version
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: spring_boot_version) {
         exclude module: 'spring-boot-starter-tomcat'
     }
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-cloudfoundry-connector'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-spring-service-connector'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-localconfig-connector'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: spring_boot_version
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-cloudfoundry-connector', version: spring_cloud_version
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-spring-service-connector', version: spring_cloud_version
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-localconfig-connector', version: spring_cloud_version
+    compile group: 'org.springframework.boot', name:'spring-boot-starter-social-facebook'
+    compile group: 'org.springframework.social', name:'spring-social-security', version: spring_social_version
+    compile group: 'org.springframework.social', name:'spring-social-facebook', version: spring_social_facebook_version
     compile(group: 'org.springframework', name: 'spring-context-support') {
         exclude(module: 'quartz')
     }
-    compile group: 'org.springframework.security', name: 'spring-security-config', version: spring_security_version
-    compile group: 'org.springframework.security', name: 'spring-security-data', version: spring_security_version
-    compile group: 'org.springframework.security', name: 'spring-security-web', version: spring_security_version
-    compile group: 'org.springframework.security', name: 'spring-security-messaging', version: spring_security_version 
     compile group: 'org.mongeez', name: 'mongeez', version: mongeez_version
     compile(group: 'com.mangofactory', name: 'swagger-springmvc', version: swagger_springmvc_version) {
         exclude(module: 'jackson-module-scala_2.10')
@@ -118,20 +114,25 @@ dependencies {
     }
     compile group: 'fr.ippon.spark.metrics', name: 'metrics-spark-reporter', version: metrics_spark_reporter_version
     testCompile group: 'com.jayway.awaitility', name: 'awaitility', version: awaility_version
-    testCompile group: 'com.jayway.jsonpath', name: 'json-path'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
-    testCompile group: 'org.assertj', name: 'assertj-core-java8', version: assertj_core_version
-    testCompile group: 'junit', name: 'junit'
-    testCompile group: 'org.mockito', name: 'mockito-core'
+    testCompile group: 'com.jayway.jsonpath', name: 'json-path', version: json_path_version
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: spring_boot_version
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: spring_boot_version
+    testCompile group: 'org.assertj', name: 'assertj-core', version: assertj_core_version
+    testCompile group: 'junit', name: 'junit', version:'4.11'
+    testCompile group: 'org.mockito', name: 'mockito-core', version:'1.9.5'
     testCompile group: 'cz.jirutka.spring', name: 'embedmongo-spring', version: embedmongo_spring_version
-    testCompile group: 'org.hamcrest', name: 'hamcrest-library'
-    testCompile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatling_version
-    
-    testCompile group: 'com.h2database', name: 'h2'
-
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version:'1.3'
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
+
+// makes sure on each build that grunt is installed
+grunt_build.dependsOn 'installGrunt'
+
+// processes your package.json before running grunt build
+grunt_build.dependsOn 'npmInstall'
+
+// runs "grunt build" as part of your gradle build
+build.dependsOn grunt_build

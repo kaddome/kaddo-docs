@@ -1,14 +1,20 @@
 'use strict';
 
 angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
-    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster', 'infinite-scroll'])
+    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster'])
 
-    .run(function ($rootScope, $location, $window, $http, $state, $translate, Auth, Principal, Language, ENV, VERSION) {
-        $rootScope.ENV = ENV;
-        $rootScope.VERSION = VERSION;
+    .run(function ($rootScope, $location, $http, $state, $translate, Auth, Principal, Language) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
             $rootScope.toState = toState;
             $rootScope.toStateParams = toStateParams;
+
+            $http.get('protected/authentication_check.gif', { ignoreErrors: true })
+                .error(function() {
+                    if ($rootScope.toState.data.roles.length > 0) {
+                        Auth.logout();
+                        $state.go('login');
+                    }
+                });
 
             if (Principal.isIdentityResolved()) {
                 Auth.authorize();
@@ -21,19 +27,8 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         });
 
         $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams) {
-            var titleKey = 'global.title';
-
             $rootScope.previousStateName = fromState.name;
             $rootScope.previousStateParams = fromParams;
-
-            // Set the page title key to the one configured in state or use default one
-            if (toState.data.pageTitle) {
-                titleKey = toState.data.pageTitle;
-            }
-            $translate(titleKey).then(function (title) {
-                // Change window title with translated one
-                $window.document.title = title;
-            });
         });
 
         $rootScope.back = function() {
@@ -47,13 +42,12 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
     })
     
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
-
         //enable CSRF
-        $httpProvider.defaults.xsrfCookieName = 'CSRF-TOKEN';
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-
+        $httpProvider.defaults.xsrfCookieName= 'CSRF-TOKEN';
+        $httpProvider.defaults.xsrfHeaderName= 'X-CSRF-TOKEN';
+    
         //Cache everything except rest api requests
-        httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
+        httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*rest.*/, /.*protected.*/], true);
 
         $urlRouterProvider.otherwise('/');
         $stateProvider.state('site', {
@@ -77,9 +71,9 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 }]
             }
         });
+        
 
-
-        // Initialize angular-translate
+        // Initialize angular-translate    
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: 'i18n/{lang}/{part}.json'
         });

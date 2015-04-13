@@ -4,7 +4,7 @@ server:
 
 
 # security configuration (this key should be unique for your application, and kept secret)
-jhipster.security.rememberme.key: 2acd8f88d42743ac894399c1b281ae3bc96107a6
+jhipster.security.rememberme.key: hoozad
 
 async:
     corePoolSize: 2
@@ -12,11 +12,13 @@ async:
     queueCapacity: 10000
 
 spring:
+    
     data:
         mongodb:
-            host: localhost
-            port: 27017
-            database: hoozad
+             host: localhost
+             port: 27017
+             database: hoozad
+    
 
     mail:
         host: localhost

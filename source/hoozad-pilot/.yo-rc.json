@@ -3,7 +3,7 @@
     "baseName": "hoozad",
     "packageName": "com.hoozad.pilot",
     "packageFolder": "com/hoozad/pilot",
-    "authenticationType": "session",
+    "authenticationType": "cookie",
     "hibernateCache": "no",
     "clusteredHttpSession": "no",
     "websocket": "no",
@@ -13,7 +13,6 @@
     "useCompass": false,
     "buildTool": "gradle",
     "frontendBuilder": "grunt",
-    "javaVersion": "8",
-    "rememberMeKey": "2acd8f88d42743ac894399c1b281ae3bc96107a6"
+    "javaVersion": "8"
   }
 }

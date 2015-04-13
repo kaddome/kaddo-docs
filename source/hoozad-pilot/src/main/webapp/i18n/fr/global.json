@@ -6,7 +6,6 @@
             "home": "Accueil",
             "entities": {
                 "main": "Entités",
-                "foo": "Foo",
                 "additionalEntity": "JHipster will add addtional entities"
             },
             "account": {
@@ -14,21 +13,18 @@
                 "settings": "Profil",
                 "password": "Mot de passe",
                 "sessions": "Sessions",
-                "login": "S'authentifier",
-                "logout": "Déconnexion",
-                "register": "Créer un compte"
-            },
-            "admin": {
-                "main": "Administration",
                 "tracker": "Suivi des utilisateurs",
                 "metrics": "Métriques",
                 "health": "Diagnostics",
                 "configuration": "Configuration",
                 "logs": "Logs",
                 "audits": "Audits",
+                "login": "S'authentifier",
+                "logout": "Déconnexion",
                 "apidocs": "API",
-                "database": "Base de données"
+                "register": "Créer un compte"
             },
+            "admin": "Administration",
             "language": "Langue"
         },
         "form": {
@@ -68,33 +64,6 @@
                     "invalid": "Votre email n'est pas valide."
                 }
             }
-        }
-    },
-    "entity": {
-        "action": {
-            "back": "Retour",
-            "cancel": "Annuler",
-            "edit": "Editer",
-            "delete": "Supprimer",
-            "save": "Sauvegarder",
-            "view": "Voir"
-        },
-        "detail": {
-            "field": "Champs",
-            "value": "Valeur"
-        },
-        "delete": {
-            "title": "Confirmation de suppression"
-        },
-        "validation": {
-            "required": "Ce champs est obligatoire.",
-            "minlength": "Ce champs doit faire au minimum {{min}} caractères.",
-            "maxlength": "Ce champs doit faire moins de {{max}} caractères.",
-            "min": "Ce champs doit être inférieur à {{min}}.",
-            "max": "Ce champs doit être supérieur à {{max}}.",
-            "pattern": "Ce champs doit suivre l'expression régluière {{pattern}}.",
-            "number": "Ce champs doit être un nombre.",
-            "datetimelocal": "Ce champs doit être une date et une heure."
         }
     },
     "footer": "Ceci est votre pied de page"

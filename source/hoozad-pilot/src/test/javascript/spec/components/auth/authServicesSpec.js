@@ -13,7 +13,11 @@ describe('Services Tests ', function () {
             authService = Auth;
             spiedAuthServerProvider = AuthServerProvider;
             //Request on app init
-            $httpBackend.expectPOST(/api\/logout\?cacheBuster=\d+/).respond(200, ''); 
+            $httpBackend.expectPOST('api/logout').respond(200, '');
+            var req = 'protected/authentication_check.gif';
+            var regex_friendly_req = req.replace(/\//g, '\\/');
+            var expected = new RegExp(regex_friendly_req + '\\?cacheBuster=[0-9]+');
+            $httpBackend.expectGET(expected).respond(200, '');
 
             $httpBackend.expectGET('i18n/en/global.json').respond(200, '');
             $httpBackend.expectGET('i18n/en/language.json').respond(200, '');
@@ -22,17 +26,14 @@ describe('Services Tests ', function () {
             $httpBackend.expectGET('i18n/en/language.json').respond(200, '');
             $httpBackend.expectGET('i18n/en/main.json').respond(200, '');
             $httpBackend.expectGET('scripts/app/main/main.html').respond({});
-            
-                $httpBackend.expectGET(/api\/account\?cacheBuster=\d+/).respond({});
-            
-          }));
+        }));
         //make sure no expectations were missed in your tests.
         //(e.g. expectGET or expectPOST)
         afterEach(function() {
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
         });
-        
+
         it('should call backend on logout then call authServerProvider.logout', function(){
             //GIVEN
             //Set spy

@@ -2,6 +2,10 @@
     "register": {
         "title": "Registration",
         "form": {
+            "external": {
+                "confirm": "You're about to create a new account on <strong>{{appTitle}}</strong> using a login from",
+                "chooseLogin" : "Please choose a login. You won't need your login to authenticate, but it will be used to uniquely identify your account."
+            },
             "button": "Register"
         },
         "messages": {

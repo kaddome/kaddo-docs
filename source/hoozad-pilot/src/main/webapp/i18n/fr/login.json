@@ -11,6 +11,11 @@
             "error": {
                 "authentication": "<strong>Erreur d'authentification!</strong> Veuillez vérifier vos identifiants de connexion."
             }
+        },
+        "social": {
+            "or": "TODO",
+            "google": "TODO",
+            "facebook": "TODO"
         }
     }
 }

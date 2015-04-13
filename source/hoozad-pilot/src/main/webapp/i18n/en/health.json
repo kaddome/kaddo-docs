@@ -2,18 +2,12 @@
     "health": {
         "title": "Health checks",
         "refresh.button": "Refresh",
-        "stacktrace": "Stacktrace",        
-        "details": {
-            "details": "Details",
-            "properties": "Properties",
-            "name": "Name",
-            "value": "Value",
-            "error": "Error"
-        },
+        "stacktrace": "Stacktrace",
         "indicator": {
+            "db": "Database",
             "diskSpace": "Disk space",
             "mail": "Email",
-            "mongo": "MongoDB"
+            "mongo": "Mongo DB"
         },
         "table": {
             "service": "Service name",

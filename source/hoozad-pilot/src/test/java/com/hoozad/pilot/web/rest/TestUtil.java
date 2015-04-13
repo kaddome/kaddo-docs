@@ -1,11 +1,12 @@
 package com.hoozad.pilot.web.rest;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.MediaType;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
+
+import org.springframework.http.MediaType;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Utility class for testing REST controllers.

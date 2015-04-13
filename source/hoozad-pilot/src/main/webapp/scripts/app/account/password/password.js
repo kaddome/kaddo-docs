@@ -7,8 +7,7 @@ angular.module('hoozadApp')
                 parent: 'account',
                 url: '/password',
                 data: {
-                    roles: ['ROLE_USER'],
-                    pageTitle: 'global.menu.account.password'
+                    roles: ['ROLE_USER']
                 },
                 views: {
                     'content@': {

@@ -13,8 +13,9 @@ angular.module('hoozadApp')
                         // After the login the language will be changed to
                         // the language selected by the user during his registration
                         $translate.use(account.langKey);
-                        deferred.resolve(data);
                     });
+                    deferred.resolve(data);
+
                     return cb();
                 }).catch(function (err) {
                     this.logout();
@@ -30,8 +31,8 @@ angular.module('hoozadApp')
                 Principal.authenticate(null);
             },
 
-            authorize: function(force) {
-                return Principal.identity(force)
+            authorize: function() {
+                return Principal.identity()
                     .then(function() {
                         var isAuthenticated = Principal.isAuthenticated();
 
