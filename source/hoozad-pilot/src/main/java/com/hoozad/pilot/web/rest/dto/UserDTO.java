@@ -13,8 +13,6 @@ public class UserDTO {
     @Pattern(regexp = "^[a-z0-9]*$")
     private String login;
 
-    private String password;
-
     private String firstName;
 
     private String lastName;
@@ -30,27 +28,14 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String login, String password, String firstName, String lastName, String email, String langKey,
+    public UserDTO(String login, String firstName, String lastName, String email, String langKey,
                    List<String> roles) {
         this.login = login;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.langKey = langKey;
         this.roles = roles;
-    }
-
-    public UserDTO(String login, String password, String firstName, String lastName, String email, String langKey,
-                   List<String> roles, Set<ExternalAccount> externalAccounts) {
-        this.login = login;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.langKey = langKey;
-        this.roles = roles;
-        this.externalAccounts = externalAccounts;
     }
 
     public UserDTO(String firstName, String lastName, String email, ExternalAccount externalAccount) {
@@ -58,11 +43,6 @@ public class UserDTO {
         this.lastName = lastName;
         this.email = email;
         this.externalAccounts.add(externalAccount);
-    }
-
-
-    public String getPassword() {
-        return password;
     }
 
     public String getLogin() {
@@ -97,7 +77,6 @@ public class UserDTO {
     public String toString() {
         return "UserDTO{" +
         "login='" + login + '\'' +
-        ", password='" + password + '\'' +
         ", firstName='" + firstName + '\'' +
         ", lastName='" + lastName + '\'' +
         ", email='" + email + '\'' +

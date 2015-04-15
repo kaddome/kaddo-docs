@@ -1,7 +1,6 @@
 package com.hoozad.pilot.security;
 
 import com.hoozad.pilot.domain.PersistentToken;
-import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.PersistentTokenRepository;
 import com.hoozad.pilot.repository.UserRepository;
 import org.joda.time.LocalDate;
@@ -179,6 +178,11 @@ public class CustomPersistentRememberMeServices extends
             throw new RememberMeAuthenticationException("Remember-me login has expired");
         }
         return token;
+    }
+
+    @Override
+    protected boolean rememberMeRequested(HttpServletRequest request, String parameter) {
+        return true;
     }
 
     private String generateSeriesData() {

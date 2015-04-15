@@ -21,15 +21,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Id
     private String id;
 
-    //TODO AFN: Remove
+    //TODO AFN: Remove? https://github.com/alexfdz/hoozad/issues/39
     @NotNull
     @Size(min = 0, max = 50)
     private String login;
-
-    //TODO AFN: Remove
-    @JsonIgnore
-    @Size(min = 0, max = 100)
-    private String password;
 
     @Size(min = 0, max = 50)
     @Field("first_name")
@@ -77,14 +72,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {
@@ -179,7 +166,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

@@ -7,19 +7,16 @@ import com.hoozad.pilot.repository.AuthorityRepository;
 import com.hoozad.pilot.repository.PersistentTokenRepository;
 import com.hoozad.pilot.repository.UserRepository;
 import com.hoozad.pilot.security.SecurityUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -31,9 +28,6 @@ public class UserService {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
-    private PasswordEncoder passwordEncoder;
-
-    @Inject
     private UserRepository userRepository;
 
     @Inject
@@ -41,20 +35,6 @@ public class UserService {
 
     @Inject
     private AuthorityRepository authorityRepository;
-
-    public Optional<User> activateRegistration(String key) {
-        log.debug("Activating user for activation key {}", key);
-        userRepository.findOneByActivationKey(key)
-            .map(user -> {
-                // activate given user for the registration key.
-                user.setActivated(true);
-                user.setActivationKey(null);
-                userRepository.save(user);
-                log.debug("Activated user: {}", user);
-                return user;
-            });
-        return Optional.empty();
-    }
 
     void checkForDuplicateUser(User user) {
 
@@ -65,21 +45,14 @@ public class UserService {
         }
     }
 
-    User createUserInformation(String login, String password, String firstName, String lastName,
-                               String email, String langKey, ExternalAccount externalAccount) {
+    public User createUserInformation(String login, String firstName, String lastName, String email,
+                                      String langKey, ExternalAccount externalAccount) {
         User newUser = new User();
         Authority authority = authorityRepository.findOne("ROLE_USER");
         Set<Authority> authorities = new HashSet<>();
         authorities.add(authority);
         newUser.setAuthorities(authorities);
-
-        if (StringUtils.isNotBlank(password)) {
-            String encryptedPassword = passwordEncoder.encode(password);
-            newUser.setPassword(encryptedPassword);
-        } else {
-            newUser.getExternalAccounts().add(externalAccount);
-        }
-
+        newUser.getExternalAccounts().add(externalAccount);
         newUser.setLogin(login);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
@@ -93,16 +66,6 @@ public class UserService {
         return newUser;
     }
 
-    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
-                                      String langKey) {
-        return createUserInformation(login, password, firstName, lastName, email, langKey, null);
-    }
-
-    public User createUserInformation(String login, String firstName, String lastName, String email,
-                                      String langKey, ExternalAccount externalAccount) {
-        return createUserInformation(login, null, firstName, lastName, email, langKey, externalAccount);
-    }
-
     public void updateUserInformation(String firstName, String lastName, String email) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
@@ -110,15 +73,6 @@ public class UserService {
             u.setEmail(email);
             userRepository.save(u);
             log.debug("Changed Information for User: {}", u);
-        });
-    }
-
-    public void changePassword(String password) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
-            String encryptedPassword = passwordEncoder.encode(password);
-            u.setPassword(encryptedPassword);
-            userRepository.save(u);
-            log.debug("Changed password for User: {}", u);
         });
     }
 
