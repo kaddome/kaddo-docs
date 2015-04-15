@@ -1,2 +1,4 @@
 *.ipr
 *.iws
+build
+node_modules
