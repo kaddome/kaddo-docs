@@ -42,11 +42,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("lang_key")
     private String langKey;
 
-    //TODO AFN: Remove
-    @Size(min = 0, max = 20)
-    @Field("activation_key")
-    private String activationKey;
-
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
     private Set<PersistentToken> persistentTokens = new HashSet<>();
@@ -94,14 +89,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.email = email;
     }
 
-    public String getActivationKey() {
-        return activationKey;
-    }
-
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
     public String getLangKey() {
         return langKey;
     }
@@ -117,7 +104,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-
 
     public Set<ExternalAccount> getExternalAccounts() {
         return externalAccounts;
@@ -158,7 +144,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", langKey='" + langKey + '\'' +
-                ", activationKey='" + activationKey + '\'' +
                 ", externalAccounts=" + externalAccounts +
                 "}";
     }
