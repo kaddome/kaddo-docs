@@ -14,16 +14,6 @@ async:
     queueCapacity: 10000
 
 spring:
-    mail:
-        host: localhost
-        port: 25
-        user:
-        password:
-        protocol: smtp
-        tls: false
-        auth: false
-        from: hoozad@localhost
-
     messageSource:
         cacheSeconds: 1
 
