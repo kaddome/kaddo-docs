@@ -38,9 +38,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(min = 0, max = 100)
     private String email;
 
-    //TODO AFN: Remove
-    private boolean activated = false;
-
     @Size(min = 2, max = 5)
     @Field("lang_key")
     private String langKey;
@@ -61,7 +58,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-
 
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
 
@@ -96,14 +92,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean getActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
     }
 
     public String getActivationKey() {
@@ -169,7 +157,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", activated='" + activated + '\'' +
                 ", langKey='" + langKey + '\'' +
                 ", activationKey='" + activationKey + '\'' +
                 ", externalAccounts=" + externalAccounts +

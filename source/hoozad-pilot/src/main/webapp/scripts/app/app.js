@@ -32,20 +32,19 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         });
 
         $rootScope.back = function() {
-            // If previous state is 'activate' or do not exist go to 'home'
-            if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
+            if ($state.get($rootScope.previousStateName) === null) {
                 $state.go('home');
             } else {
                 $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
             }
         };
     })
-    
+
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
         //enable CSRF
         $httpProvider.defaults.xsrfCookieName= 'CSRF-TOKEN';
         $httpProvider.defaults.xsrfHeaderName= 'X-CSRF-TOKEN';
-    
+
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*rest.*/, /.*protected.*/], true);
 
@@ -71,9 +70,9 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 }]
             }
         });
-        
 
-        // Initialize angular-translate    
+
+        // Initialize angular-translate
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: 'i18n/{lang}/{part}.json'
         });

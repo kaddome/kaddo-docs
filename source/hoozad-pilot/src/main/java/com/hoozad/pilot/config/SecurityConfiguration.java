@@ -5,7 +5,6 @@ import com.hoozad.pilot.security.AjaxAuthenticationSuccessHandler;
 import com.hoozad.pilot.security.AjaxLogoutSuccessHandler;
 import com.hoozad.pilot.security.AuthoritiesConstants;
 import com.hoozad.pilot.security.Http401UnauthorizedEntryPoint;
-import com.hoozad.pilot.security.UserNotActivatedException;
 import com.hoozad.pilot.security.social.SocialLoginExceptionMapper;
 import com.hoozad.pilot.web.filter.CsrfCookieGeneratorFilter;
 import org.springframework.context.annotation.Configuration;
@@ -67,8 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected SpringSocialConfigurer buildSpringSocialConfigurer() {
         // build an AuthenticationFailureHandler that is aware of our own exception types
         final SocialLoginExceptionMapper handler = new SocialLoginExceptionMapper("/#/register/external")
-            .add(SocialAuthenticationException.class, "/#/register/external/rejected")
-            .add(UserNotActivatedException.class, "/#/activate");
+            .add(SocialAuthenticationException.class, "/#/register/external/rejected");
 
         SpringSocialConfigurer configurer = new SpringSocialConfigurer()
             .postLoginUrl("/")
@@ -133,7 +131,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .disable()
             .authorizeRequests()
                 .antMatchers("/api/register").permitAll()
-                .antMatchers("/api/activate").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/**").authenticated()

@@ -12,7 +12,6 @@ async:
     queueCapacity: 10000
 
 spring:
-
     data:
         mongodb:
              host: localhost

@@ -77,19 +77,6 @@ angular.module('hoozadApp')
                         return cb(err);
                     }.bind(this)).$promise;
             },
-
-            activateAccount: function (key, callback) {
-                var cb = callback || angular.noop;
-
-                return Activate.get(key,
-                    function (response) {
-                        return cb(response);
-                    },
-                    function (err) {
-                        return cb(err);
-                    }.bind(this)).$promise;
-            },
-
             changePassword: function (newPassword, callback) {
                 var cb = callback || angular.noop;
 
