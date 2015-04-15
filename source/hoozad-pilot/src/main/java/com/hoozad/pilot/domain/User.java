@@ -44,7 +44,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
-    private Set<PersistentToken> persistentTokens = new HashSet<>();
 
     public String getId() {
         return id;
