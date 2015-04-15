@@ -153,6 +153,7 @@ public class AccountResource {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //TODO AFN: Creates a new external user
     ResponseEntity<?> registerExternalAccount(UserDTO currentRequestDTO, HttpServletRequest request) {
         log.debug("Creating user from previous external authentication");
 

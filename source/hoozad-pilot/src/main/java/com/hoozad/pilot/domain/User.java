@@ -21,10 +21,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Id
     private String id;
 
+    //TODO AFN: Remove
     @NotNull
     @Size(min = 0, max = 50)
     private String login;
 
+    //TODO AFN: Remove
     @JsonIgnore
     @Size(min = 0, max = 100)
     private String password;
@@ -41,12 +43,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(min = 0, max = 100)
     private String email;
 
+    //TODO AFN: Remove
     private boolean activated = false;
 
     @Size(min = 2, max = 5)
     @Field("lang_key")
     private String langKey;
 
+    //TODO AFN: Remove
     @Size(min = 0, max = 20)
     @Field("activation_key")
     private String activationKey;
@@ -63,9 +67,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    
+
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
-    
+
 
     public String getLogin() {
         return login;
@@ -139,7 +143,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
-    
+
     public Set<ExternalAccount> getExternalAccounts() {
         return externalAccounts;
     }

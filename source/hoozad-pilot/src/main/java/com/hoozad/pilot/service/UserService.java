@@ -7,7 +7,6 @@ import com.hoozad.pilot.repository.AuthorityRepository;
 import com.hoozad.pilot.repository.PersistentTokenRepository;
 import com.hoozad.pilot.repository.UserRepository;
 import com.hoozad.pilot.security.SecurityUtils;
-import com.hoozad.pilot.service.util.RandomUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -79,7 +78,6 @@ public class UserService {
             newUser.setPassword(encryptedPassword);
         } else {
             newUser.getExternalAccounts().add(externalAccount);
-//            externalAccount.setUser(newUser);
         }
 
         newUser.setLogin(login);
@@ -87,11 +85,7 @@ public class UserService {
         newUser.setLastName(lastName);
         newUser.setEmail(email);
         newUser.setLangKey(langKey);
-
-        // new user is not active
-        newUser.setActivated(false);
-        // new user gets registration key
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
+        newUser.setActivated(true);
 
         checkForDuplicateUser(newUser);
         userRepository.save(newUser);
