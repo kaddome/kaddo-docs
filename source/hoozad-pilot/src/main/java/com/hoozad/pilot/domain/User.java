@@ -54,8 +54,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
-
-
+    
     public String getLogin() {
         return login;
     }

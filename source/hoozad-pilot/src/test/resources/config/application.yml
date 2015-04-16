@@ -2,7 +2,6 @@ server:
     port: 10344
     address: localhost
 
-
 # security configuration (this key should be unique for your application, and kept secret)
 jhipster.security.rememberme.key: hoozad
 
@@ -18,6 +17,10 @@ spring:
              port: 27017
              database: hoozad
 
+    social:
+        facebook:
+                 clientId: 342991509228104
+                 clientSecret: ad857bfa04eeb269960c66b4e9bae6ad
 metrics:
     jmx.enabled: false
 
