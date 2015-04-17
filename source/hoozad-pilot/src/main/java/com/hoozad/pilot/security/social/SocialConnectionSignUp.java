@@ -71,7 +71,6 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
         return userService.createUserInformation(
             getLoginForConnection(connection),
             externalAuthDTO.getFirstName(), externalAuthDTO.getLastName(),
-            externalAuthDTO.getEmail(),
             null,
             externalAccount
         );
@@ -90,7 +89,6 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
         UserProfile profile = connection.fetchUserProfile();
         String firstName = profile.getFirstName();
         String lastName = profile.getLastName();
-        String email = profile.getEmail();
 
         // build the ExternalAccount from the ConnectionKey
         String externalAccountProviderName = connection.getKey().getProviderId();
@@ -99,10 +97,10 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
         ExternalAccount externalAccount = new ExternalAccount(externalAccountProvider, externalUserId);
 
         // check that we got the information we needed
-        if (StringUtils.isBlank(firstName) || StringUtils.isBlank(lastName) || StringUtils.isBlank(email))
+        if (StringUtils.isBlank(firstName) || StringUtils.isBlank(lastName))
             throw new ApiException(externalAccountProviderName, "provider failed to return required attributes");
 
 
-        return new UserDTO(firstName, lastName, email, externalAccount);
+        return new UserDTO(firstName, lastName, externalAccount);
     }
 }

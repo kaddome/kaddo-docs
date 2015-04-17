@@ -17,8 +17,6 @@ public class UserDTO {
 
     private String lastName;
 
-    private String email;
-
     private String langKey;
 
     private List<String> roles;
@@ -28,20 +26,18 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String login, String firstName, String lastName, String email, String langKey,
+    public UserDTO(String login, String firstName, String lastName, String langKey,
                    List<String> roles) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.langKey = langKey;
         this.roles = roles;
     }
 
-    public UserDTO(String firstName, String lastName, String email, ExternalAccount externalAccount) {
+    public UserDTO(String firstName, String lastName, ExternalAccount externalAccount) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.externalAccounts.add(externalAccount);
     }
 
@@ -55,10 +51,6 @@ public class UserDTO {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getLangKey() {
@@ -79,7 +71,6 @@ public class UserDTO {
         "login='" + login + '\'' +
         ", firstName='" + firstName + '\'' +
         ", lastName='" + lastName + '\'' +
-        ", email='" + email + '\'' +
         ", langKey='" + langKey + '\'' +
         ", roles=" + roles +
         ", externalAccounts=" + externalAccounts +
