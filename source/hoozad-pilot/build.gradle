@@ -131,4 +131,5 @@ task wrapper(type: Wrapper) {
 grunt_build.dependsOn 'installGrunt'
 grunt_build.dependsOn 'npmInstall'
 test.dependsOn grunt_test
+build.dependsOn grunt_build
 build.dependsOn test
