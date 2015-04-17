@@ -35,7 +35,14 @@
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "E-mail",
-            "email.placeholder": "Your e-mail"
+            "email.placeholder": "Your e-mail",
+            "delivery": "Delivery details",
+            "address": "Address",
+            "address1.placeholder": "Address line 1",
+            "address2.placeholder": "Address line 2",
+            "city.placeholder": "City",
+            "postcode.placeholder": "Postcode",
+            "country.placeholder": "Country"
         },
         "messages": {
             "info": {
@@ -62,7 +69,11 @@
                     "invalid": "Your e-mail is invalid.",
                     "minlength": "Your e-mail is required to be at least 5 characters",
                     "maxlength": "Your e-mail cannot be longer than 50 characters"
-                }
+                },
+                "address.required": "Your address is required.",
+                "city.required": "Your city is required.",
+                "postcode.required": "Your postcode is required.",
+                "country.required": "Your country is required."
             }
         }
     },

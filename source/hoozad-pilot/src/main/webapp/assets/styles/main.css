@@ -126,3 +126,8 @@ ul#strength {
     width:20px;
 }
 /* end Password strength bar style */
+
+
+.form-control {
+    margin-bottom: 10px;
+}
