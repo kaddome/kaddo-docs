@@ -65,6 +65,11 @@ repositories {
     maven { url 'http://repo.maven.apache.org/maven2' }
 }
 
+heroku {
+    apiKey = 'c6d4f65ffa66645b49842de24e9decad4969f311'
+    appName = 'hozad-pilot'
+}
+
 dependencies {
     compile group: 'com.codahale.metrics', name: 'metrics-core', version: codahale_metrics_version
     compile group: 'com.codahale.metrics', name: 'metrics-graphite', version: codahale_metrics_version
