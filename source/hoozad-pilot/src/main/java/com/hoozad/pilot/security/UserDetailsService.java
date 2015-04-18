@@ -32,13 +32,8 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     private User getUser(final String login) {
         String lowercaseLogin = login.toLowerCase();
-        User userFromDatabase = userRepository.findOneByLogin(lowercaseLogin)
+        return userRepository.findOneByLogin(lowercaseLogin)
             .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"));
-        if (!userFromDatabase.getActivated()) {
-            throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
-        }
-        return userFromDatabase;
-
     }
 
     private Collection<GrantedAuthority> getGrantedAuthorities(User user) {
@@ -56,7 +51,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         User user = getUser(login);
         Collection<GrantedAuthority> grantedAuthorities = getGrantedAuthorities(user);
         log.debug("Login successful");
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), "n/a", grantedAuthorities);
     }
 
     @Override

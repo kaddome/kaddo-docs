@@ -1,14 +1,15 @@
 package com.hoozad.pilot.config;
 
-import com.hoozad.pilot.security.*;
+import com.hoozad.pilot.security.AjaxAuthenticationFailureHandler;
+import com.hoozad.pilot.security.AjaxAuthenticationSuccessHandler;
+import com.hoozad.pilot.security.AjaxLogoutSuccessHandler;
+import com.hoozad.pilot.security.AuthoritiesConstants;
+import com.hoozad.pilot.security.Http401UnauthorizedEntryPoint;
 import com.hoozad.pilot.security.social.SocialLoginExceptionMapper;
 import com.hoozad.pilot.web.filter.CsrfCookieGeneratorFilter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
-
-
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
@@ -17,14 +18,11 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.social.security.SocialAuthenticationException;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
-
 
 import javax.inject.Inject;
 
@@ -53,16 +51,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Inject
     private RememberMeServices rememberMeServices;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Inject
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService);
     }
 
     /**
@@ -75,8 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected SpringSocialConfigurer buildSpringSocialConfigurer() {
         // build an AuthenticationFailureHandler that is aware of our own exception types
         final SocialLoginExceptionMapper handler = new SocialLoginExceptionMapper("/#/register/external")
-            .add(SocialAuthenticationException.class, "/#/register/external/rejected")
-            .add(UserNotActivatedException.class, "/#/activate");
+            .add(SocialAuthenticationException.class, "/#/register/external/rejected");
 
         SpringSocialConfigurer configurer = new SpringSocialConfigurer()
             .postLoginUrl("/")
@@ -141,7 +131,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .disable()
             .authorizeRequests()
                 .antMatchers("/api/register").permitAll()
-                .antMatchers("/api/activate").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/**").authenticated()

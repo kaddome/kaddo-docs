@@ -21,13 +21,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Id
     private String id;
 
+    //TODO AFN: Remove? https://github.com/alexfdz/hoozad/issues/39
     @NotNull
     @Size(min = 0, max = 50)
     private String login;
-
-    @JsonIgnore
-    @Size(min = 0, max = 100)
-    private String password;
 
     @Size(min = 0, max = 50)
     @Field("first_name")
@@ -41,19 +38,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(min = 0, max = 100)
     private String email;
 
-    private boolean activated = false;
-
     @Size(min = 2, max = 5)
     @Field("lang_key")
     private String langKey;
 
-    @Size(min = 0, max = 20)
-    @Field("activation_key")
-    private String activationKey;
-
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
-    private Set<PersistentToken> persistentTokens = new HashSet<>();
 
     public String getId() {
         return id;
@@ -63,24 +53,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
     
-
     public String getLogin() {
         return login;
     }
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {
@@ -107,22 +87,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.email = email;
     }
 
-    public boolean getActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
-    public String getActivationKey() {
-        return activationKey;
-    }
-
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
     public String getLangKey() {
         return langKey;
     }
@@ -139,7 +103,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
-    
     public Set<ExternalAccount> getExternalAccounts() {
         return externalAccounts;
     }
@@ -175,13 +138,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", activated='" + activated + '\'' +
                 ", langKey='" + langKey + '\'' +
-                ", activationKey='" + activationKey + '\'' +
                 ", externalAccounts=" + externalAccounts +
                 "}";
     }

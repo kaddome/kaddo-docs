@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hoozadApp')
-    .factory('Auth', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password) {
+    .factory('Auth', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register) {
         return {
             login: function (credentials, callback) {
                 var cb = callback || angular.noop;
@@ -76,28 +76,6 @@ angular.module('hoozadApp')
                     function (err) {
                         return cb(err);
                     }.bind(this)).$promise;
-            },
-
-            activateAccount: function (key, callback) {
-                var cb = callback || angular.noop;
-
-                return Activate.get(key,
-                    function (response) {
-                        return cb(response);
-                    },
-                    function (err) {
-                        return cb(err);
-                    }.bind(this)).$promise;
-            },
-
-            changePassword: function (newPassword, callback) {
-                var cb = callback || angular.noop;
-
-                return Password.save(newPassword, function () {
-                    return cb();
-                }, function (err) {
-                    return cb(err);
-                }).$promise;
             }
         };
     });

@@ -11,7 +11,6 @@
                 "first_name": "",
                 "last_name": "System",
                 "email": "",
-                "activated": "true",
                 "lang_key": "en",
                 "created_by": "system",
                 "created_date": new Date(),
@@ -25,7 +24,6 @@
                 "first_name": "Anonymous",
                 "last_name": "User",
                 "email": "",
-                "activated": "true",
                 "lang_key": "en",
                 "created_by": "system",
                 "created_date": new Date(),
@@ -39,7 +37,6 @@
                 "first_name": "",
                 "last_name": "Administrator",
                 "email": "",
-                "activated": "true",
                 "lang_key": "en",
                 "created_by": "system",
                 "created_date": new Date(),
@@ -47,13 +44,12 @@
             });
             db.T_USER.insert(
             {
-                "_id" : "user-3", 
+                "_id" : "user-3",
                 "login" : "user",
                 "password" : "$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K",
                 "first_name": "",
                 "last_name": "User",
                 "email": "",
-                "activated": "true",
                 "lang_key": "en",
                 "created_by": "system",
                 "created_date": new Date(),
