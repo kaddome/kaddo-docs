@@ -14,6 +14,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
+apply plugin: 'com.moowork.node'
 
 bootRepackage {
    mainClass = 'com.hoozad.pilot.Application'
@@ -21,6 +22,13 @@ bootRepackage {
 
 springBoot {
     mainClass = 'com.hoozad.pilot.Application'
+}
+node {
+    version = '0.12.2'
+    npmVersion = '2.8.3'
+    distBaseUrl = 'http://nodejs.org/dist'
+    download = true
+    workDir = file("${project.buildDir}/nodejs")
 }
 
 apply from: 'yeoman.gradle'
