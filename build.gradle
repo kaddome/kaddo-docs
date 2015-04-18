@@ -68,6 +68,7 @@ repositories {
 heroku {
     apiKey = 'c6d4f65ffa66645b49842de24e9decad4969f311'
     appName = 'hozad-pilot'
+    buildpack = 'https://github.com/heroku/heroku-buildpack-gradle'
 }
 
 dependencies {
