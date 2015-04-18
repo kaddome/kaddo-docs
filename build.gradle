@@ -16,6 +16,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'war'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.moowork.grunt'
+apply from: 'yeoman.gradle'
 
 bootRepackage {
    mainClass = 'com.hoozad.pilot.Application'
@@ -24,27 +25,18 @@ bootRepackage {
 springBoot {
     mainClass = 'com.hoozad.pilot.Application'
 }
+
 node {
     version = '0.12.2'
     npmVersion = '2.8.3'
-    distBaseUrl = 'http://nodejs.org/dist'
     download = true
-    workDir = file("${project.buildDir}/nodejs")
 }
-
-apply from: 'yeoman.gradle'
 
 if (project.hasProperty('prod')) {
-    profile = 'prod'
-} else if (project.hasProperty('fast')) {
-    profile = 'fast'
-}
-
-if (profile == 'prod') {
     apply from: 'profile_prod.gradle'
-} else if (profile == 'fast') {
+} else if (project.hasProperty('fast')) {
     apply from: 'profile_fast.gradle'
-} else {
+}else {
     apply from: 'profile_dev.gradle'
 }
 
