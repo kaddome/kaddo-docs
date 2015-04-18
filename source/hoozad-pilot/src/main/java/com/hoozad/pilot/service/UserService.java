@@ -1,6 +1,7 @@
 package com.hoozad.pilot.service;
 
 import com.hoozad.pilot.domain.Authority;
+import com.hoozad.pilot.domain.DeliveryDetails;
 import com.hoozad.pilot.domain.ExternalAccount;
 import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.AuthorityRepository;
@@ -59,10 +60,11 @@ public class UserService {
         return newUser;
     }
 
-    public void updateUserInformation(String firstName, String lastName) {
+    public void updateUserInformation(String firstName, String lastName, DeliveryDetails deliveryDetails) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
             u.setLastName(lastName);
+            u.setDeliveryDetails(deliveryDetails);
             userRepository.save(u);
             log.debug("Changed Information for User: {}", u);
         });

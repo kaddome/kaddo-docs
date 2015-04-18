@@ -37,6 +37,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("lang_key")
     private String langKey;
 
+    @Field("delivery_details")
+    private DeliveryDetails deliveryDetails;
+
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
 
@@ -96,6 +99,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setExternalAccounts(Set<ExternalAccount> externalAccountIds) {
         this.externalAccounts = externalAccountIds;
+    }
+
+    public DeliveryDetails getDeliveryDetails() {
+        return deliveryDetails;
+    }
+
+    public void setDeliveryDetails(DeliveryDetails deliveryDetails) {
+        this.deliveryDetails = deliveryDetails;
     }
 
     @Override

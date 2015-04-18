@@ -73,6 +73,7 @@ public class AccountResource {
                     user.getFirstName(),
                     user.getLastName(),
                     user.getLangKey(),
+                    user.getDeliveryDetails(),
                     user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toList())),
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -90,7 +91,7 @@ public class AccountResource {
             .findOneByLogin(userDTO.getLogin())
             .filter(u -> u.getLogin().equals(SecurityUtils.getCurrentLogin()))
             .map(u -> {
-                userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName());
+                userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getDeliveryDetails());
                 return new ResponseEntity<String>(HttpStatus.OK);
             })
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));

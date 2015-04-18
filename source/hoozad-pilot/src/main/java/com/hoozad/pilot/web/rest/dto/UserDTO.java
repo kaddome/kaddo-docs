@@ -1,5 +1,6 @@
 package com.hoozad.pilot.web.rest.dto;
 
+import com.hoozad.pilot.domain.DeliveryDetails;
 import com.hoozad.pilot.domain.ExternalAccount;
 
 import javax.validation.constraints.Pattern;
@@ -18,6 +19,7 @@ public class UserDTO {
     private String lastName;
 
     private String langKey;
+    private DeliveryDetails deliveryDetails;
 
     private List<String> roles;
 
@@ -27,12 +29,13 @@ public class UserDTO {
     }
 
     public UserDTO(String login, String firstName, String lastName, String langKey,
-                   List<String> roles) {
+                   DeliveryDetails deliveryDetails, List<String> roles) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.langKey = langKey;
         this.roles = roles;
+        this.deliveryDetails = deliveryDetails;
     }
 
     public UserDTO(String firstName, String lastName, ExternalAccount externalAccount) {
@@ -63,6 +66,10 @@ public class UserDTO {
 
     public Set<ExternalAccount> getExternalAccounts() {
         return Collections.unmodifiableSet(externalAccounts);
+    }
+
+    public DeliveryDetails getDeliveryDetails() {
+        return deliveryDetails;
     }
 
     @Override
