@@ -1,11 +1,10 @@
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.moowork.grunt'
 
-task bower(dependsOn: 'npmInstall', type: NodeTask){
+task bower(type: NodeTask){
     script = file('node_modules/bower/bin/bower')
     args = ['install']
 }
 
 
 processResources.dependsOn 'bower'
-

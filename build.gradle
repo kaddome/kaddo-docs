@@ -32,7 +32,6 @@ node {
 }
 
 apply from: 'yeoman.gradle'
-
 if (project.hasProperty('prod')) {
     apply from: 'profile_prod.gradle'
 } else if (project.hasProperty('fast')) {
@@ -128,8 +127,7 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
-task stage
 
-test.dependsOn grunt_test
-grunt_build.dependsOn installGrunt, npmInstall
-stage.dependsOn clean, build
+task build_ui dependsOn grunt_test, grunt_build
+build.mustRunAfter build_ui
+build.dependsOn build_ui, test
