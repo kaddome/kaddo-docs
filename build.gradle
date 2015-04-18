@@ -51,7 +51,7 @@ configurations {
 
 jar {
     baseName = 'hoozad'
-    version =  '0.1-SNAPSHOT'
+    version =  ''
 }
 
 sourceCompatibility = 1.8
