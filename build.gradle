@@ -129,5 +129,7 @@ task wrapper(type: Wrapper) {
 task stage(dependsOn: ['clean', 'build'])
 
 test.dependsOn grunt_test
+grunt_build.dependsOn 'installGrunt'
+grunt_build.dependsOn 'npmInstall'
 build.dependsOn grunt_build
 build.dependsOn test
