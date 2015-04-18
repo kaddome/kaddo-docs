@@ -62,9 +62,12 @@
                     <input type="text" class="form-control" name="postcode" placeholder="{{'global.form.postcode.placeholder' | translate}}"
                            ng-model="settingsAccount.deliveryDetails.postcode" ng-maxlength=100 maxlength="100" required>
                     <label translate="global.form.city">City</label>
+
                     <input type="text" class="form-control" name="city" placeholder="{{'global.form.city.placeholder' | translate}}"
                            ng-model="settingsAccount.deliveryDetails.city" ng-maxlength=100 maxlength="100"
                            force-selection="true" options="placeOptions" g-places-autocomplete required>
+
+
                     <div ng-show="form.addressLine1.$dirty && form.addressLine1.$invalid &&
                      form.city.$dirty && form.city.$invalid &&
                      form.postcode.$dirty && form.postcode.$invalid">
