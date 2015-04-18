@@ -53,23 +53,23 @@
                 </div>
 
                 <div class="form-group">
-                    <label translate="global.form.delivery">Delivery details</label>
-                    <input type="text" class="form-control" name="address1" placeholder="{{'global.form.address1.placeholder' | translate}}"
-                           ng-model="settingsAccount.address1" ng-maxlength=100 required maxlength="100">
-                    <input type="text" class="form-control" name="address2" placeholder="{{'global.form.address2.placeholder' | translate}}"
-                           ng-model="settingsAccount.address2" ng-maxlength=100 maxlength="100">
-                    <input type="text" class="form-control" name="city" placeholder="{{'global.form.city.placeholder' | translate}}"
-                           ng-model="settingsAccount.city" ng-maxlength=100 maxlength="100" required>
+                    <label translate="global.form.address">Address</label>
+                    <input type="text" class="form-control" name="addressLine1" placeholder="{{'global.form.addressLine1.placeholder' | translate}}"
+                           ng-model="settingsAccount.deliveryDetails.addressLine1" ng-maxlength=100 required maxlength="100">
+                    <input type="text" class="form-control" name="addressLine2" placeholder="{{'global.form.addressLine2.placeholder' | translate}}"
+                           ng-model="settingsAccount.deliveryDetails.addressLine2" ng-maxlength=100 maxlength="100">
+                    <label translate="global.form.postcode">Postcode</label>
                     <input type="text" class="form-control" name="postcode" placeholder="{{'global.form.postcode.placeholder' | translate}}"
-                           ng-model="settingsAccount.postcode" ng-maxlength=100 maxlength="100" required>
-                    <input type="text" class="form-control" name="country" placeholder="{{'global.form.country.placeholder' | translate}}"
-                           ng-model="settingsAccount.country" ng-maxlength=100 maxlength="100" required>
-                    <div ng-show="form.address1.$dirty && form.address1.$invalid &&
+                           ng-model="settingsAccount.deliveryDetails.postcode" ng-maxlength=100 maxlength="100" required>
+                    <label translate="global.form.city">City</label>
+                    <input type="text" class="form-control" name="city" placeholder="{{'global.form.city.placeholder' | translate}}"
+                           ng-model="settingsAccount.deliveryDetails.city" ng-maxlength=100 maxlength="100"
+                           force-selection="true" options="placeOptions" g-places-autocomplete required>
+                    <div ng-show="form.addressLine1.$dirty && form.addressLine1.$invalid &&
                      form.city.$dirty && form.city.$invalid &&
-                     form.postcode.$dirty && form.postcode.$invalid &&
-                     form.country.$dirty && form.country.$invalid">
+                     form.postcode.$dirty && form.postcode.$invalid">
                         <p class="help-block"
-                           ng-show="form.address1.$error.required" translate="global.messages.validate.address.required">
+                           ng-show="form.addressLine1.$error.required" translate="global.messages.validate.address.required">
                             Your address is required.
                         </p>
                         <p class="help-block"

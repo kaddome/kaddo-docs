@@ -38,10 +38,13 @@
             "email.placeholder": "Your e-mail",
             "delivery": "Delivery details",
             "address": "Address",
-            "address1.placeholder": "Address line 1",
-            "address2.placeholder": "Address line 2",
+            "addressLine1.placeholder": "Address line 1",
+            "addressLine2.placeholder": "Address line 2",
+            "city": "City",
             "city.placeholder": "City",
+            "postcode": "Postcode",
             "postcode.placeholder": "Postcode",
+            "country": "Country",
             "country.placeholder": "Country"
         },
         "messages": {
