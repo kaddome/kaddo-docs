@@ -16,7 +16,6 @@ apply plugin: 'spring-boot'
 apply plugin: 'war'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.moowork.grunt'
-apply from: 'yeoman.gradle'
 
 bootRepackage {
    mainClass = 'com.hoozad.pilot.Application'
@@ -31,6 +30,8 @@ node {
     npmVersion = '2.8.3'
     download = true
 }
+
+apply from: 'yeoman.gradle'
 
 if (project.hasProperty('prod')) {
     apply from: 'profile_prod.gradle'
@@ -131,5 +132,4 @@ task stage
 
 test.dependsOn grunt_test
 grunt_build.dependsOn installGrunt, npmInstall
-build.dependsOn grunt_build, test
 stage.dependsOn clean, build
