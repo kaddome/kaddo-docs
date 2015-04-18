@@ -135,9 +135,11 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
-task stage
+
 
 test.dependsOn grunt_test
 grunt_build.dependsOn installGrunt, npmInstall
+
 build.dependsOn grunt_build, test
-stage.dependsOn clean, build
+build.mustRunAfter grunt_build
+task stage dependsOn build
