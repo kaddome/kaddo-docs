@@ -24,19 +24,27 @@ bootRepackage {
 springBoot {
     mainClass = 'com.hoozad.pilot.Application'
 }
-
 node {
     version = '0.12.2'
     npmVersion = '2.8.3'
+    distBaseUrl = 'http://nodejs.org/dist'
     download = true
+    workDir = file("${project.buildDir}/nodejs")
 }
 
 apply from: 'yeoman.gradle'
+
 if (project.hasProperty('prod')) {
-    apply from: 'profile_prod.gradle'
+    profile = 'prod'
 } else if (project.hasProperty('fast')) {
+    profile = 'fast'
+}
+
+if (profile == 'prod') {
+    apply from: 'profile_prod.gradle'
+} else if (profile == 'fast') {
     apply from: 'profile_fast.gradle'
-}else {
+} else {
     apply from: 'profile_dev.gradle'
 }
 
@@ -49,13 +57,10 @@ configurations {
     providedRuntime
 }
 
-jar {
+war {
     baseName = 'hoozad'
-    version =  ''
+    version =  '0.1-SNAPSHOT'
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     maven { url 'http://repo.spring.io/milestone' }
@@ -130,9 +135,9 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
+task stage
 
-task build_ui dependsOn installGrunt, grunt_test, grunt_build
-build.dependsOn build_ui, test
-build.mustRunAfter build_ui, test
-build_ui.mustRunAfter installGrunt
-
+test.dependsOn grunt_test
+grunt_build.dependsOn installGrunt, npmInstall
+build.dependsOn grunt_build, test
+stage.dependsOn clean, build
