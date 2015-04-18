@@ -13,7 +13,6 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
-apply plugin: 'war'
 apply plugin: 'com.moowork.node'
 apply plugin: 'com.moowork.grunt'
 
@@ -57,9 +56,9 @@ configurations {
     providedRuntime
 }
 
-war {
-    baseName = 'hoozad'
-    version =  '0.1-SNAPSHOT'
+jar {
+    baseName = 'hoozad-pilot'
+    version = ''
 }
 
 repositories {
