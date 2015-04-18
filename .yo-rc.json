@@ -1,0 +1,18 @@
+{
+  "generator-jhipster": {
+    "baseName": "hoozad",
+    "packageName": "com.hoozad.pilot",
+    "packageFolder": "com/hoozad/pilot",
+    "authenticationType": "cookie",
+    "hibernateCache": "no",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "useCompass": false,
+    "buildTool": "gradle",
+    "frontendBuilder": "grunt",
+    "javaVersion": "8"
+  }
+}

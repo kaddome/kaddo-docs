@@ -1,0 +1,31 @@
+<mongoChangeLog>
+    <changeSet changeId="ChangeSet-2" author="jhipster">
+        <script>
+            db.T_USER.ensureIndex({"login" : 1});
+            db.T_USER.insert(
+            {
+                "_id" : "user-0",
+                "login" : "system",
+                "password" : "$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG",
+                "first_name": "",
+                "last_name": "System",
+                "lang_key": "en",
+                "created_by": "system",
+                "created_date": new Date(),
+                "authorities": [{"_id": "ROLE_ADMIN"}, {"_id": "ROLE_USER"}]
+            });
+            db.T_USER.insert(
+            {
+                "_id" : "user-2",
+                "login" : "admin",
+                "password" : "$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC",
+                "first_name": "",
+                "last_name": "Administrator",
+                "lang_key": "en",
+                "created_by": "system",
+                "created_date": new Date(),
+                "authorities": [{"_id": "ROLE_ADMIN"}, {"_id": "ROLE_USER"}]
+            });
+        </script>
+    </changeSet>
+</mongoChangeLog>

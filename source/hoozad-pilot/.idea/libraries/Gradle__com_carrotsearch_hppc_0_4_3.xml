@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.carrotsearch:hppc:0.4.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.carrotsearch/hppc/0.4.3/717053d788bb6d471db39e4afeb53647a0977531/hppc-0.4.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.carrotsearch/hppc/0.4.3/2cc16ff8947f6fdc6a7aebcf6ab2fa49239d6f0c/hppc-0.4.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
