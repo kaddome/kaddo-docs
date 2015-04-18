@@ -126,7 +126,7 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
-task stage(dependsOn: ['clean', 'build', 'installDist'])
+task stage(dependsOn: ['clean', 'build'])
 
 grunt_build.dependsOn 'installGrunt'
 grunt_build.dependsOn 'npmInstall'
