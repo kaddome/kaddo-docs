@@ -28,7 +28,7 @@ node {
     version = '0.12.2'
     npmVersion = '2.8.3'
     distBaseUrl = 'http://nodejs.org/dist'
-    download = false
+    download = true
     workDir = file("${project.buildDir}/nodejs")
 }
 
