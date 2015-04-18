@@ -5,8 +5,8 @@ buildscript {
     }
     dependencies {
         classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.0.RELEASE')
-        classpath('com.moowork.gradle:gradle-node-plugin:0.8')
-        classpath('com.moowork.gradle:gradle-grunt-plugin:0.6')
+        classpath('com.moowork.gradle:gradle-node-plugin:0.9')
+        classpath('com.moowork.gradle:gradle-grunt-plugin:0.9')
         classpath('be.filipblondeel.gradle:gradle-gulp-plugin:0.1')
     }
 }
@@ -15,6 +15,7 @@ apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
 apply plugin: 'com.moowork.node'
+apply plugin: 'com.moowork.grunt'
 
 bootRepackage {
    mainClass = 'com.hoozad.pilot.Application'
@@ -27,7 +28,7 @@ node {
     version = '0.12.2'
     npmVersion = '2.8.3'
     distBaseUrl = 'http://nodejs.org/dist'
-    download = true
+    download = false
     workDir = file("${project.buildDir}/nodejs")
 }
 
@@ -134,10 +135,9 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
-task stage(dependsOn: ['clean', 'build'])
+task stage
 
 test.dependsOn grunt_test
-grunt_build.dependsOn 'installGrunt'
-grunt_build.dependsOn 'npmInstall'
-build.dependsOn grunt_build
-build.dependsOn test
+grunt_build.dependsOn installGrunt, npmInstall
+build.dependsOn grunt_build, test
+stage.dependsOn clean, build
