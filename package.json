@@ -8,7 +8,7 @@
     "url": "https://github.com/alexfdz/hoozad"
   },
   "scripts": {
-    "postinstall": "./gradlew build"
+    "postinstall": "./gradlew installGrunt build"
   },
   "devDependencies": {
     "grunt": "0.4.5",

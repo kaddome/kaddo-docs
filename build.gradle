@@ -128,7 +128,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
 
-task build_ui dependsOn installGrunt, grunt_test, grunt_build
+task build_ui dependsOn grunt_test, grunt_build
 build.mustRunAfter build_ui
 build.dependsOn build_ui, test
 
