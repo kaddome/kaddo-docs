@@ -1,7 +1,6 @@
 package com.hoozad.pilot.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -34,13 +33,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("last_name")
     private String lastName;
 
-    @Email
-    @Size(min = 0, max = 100)
-    private String email;
-
     @Size(min = 2, max = 5)
     @Field("lang_key")
     private String langKey;
+
+    @Field("delivery_details")
+    private DeliveryDetails deliveryDetails;
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
@@ -54,7 +52,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
-    
+
     public String getLogin() {
         return login;
     }
@@ -79,14 +77,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getLangKey() {
         return langKey;
     }
@@ -109,6 +99,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setExternalAccounts(Set<ExternalAccount> externalAccountIds) {
         this.externalAccounts = externalAccountIds;
+    }
+
+    public DeliveryDetails getDeliveryDetails() {
+        return deliveryDetails;
+    }
+
+    public void setDeliveryDetails(DeliveryDetails deliveryDetails) {
+        this.deliveryDetails = deliveryDetails;
     }
 
     @Override
@@ -137,12 +135,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "login='" + login + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", langKey='" + langKey + '\'' +
-                ", externalAccounts=" + externalAccounts +
-                "}";
+            "login='" + login + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", langKey='" + langKey + '\'' +
+            ", externalAccounts=" + externalAccounts +
+            "}";
     }
 }

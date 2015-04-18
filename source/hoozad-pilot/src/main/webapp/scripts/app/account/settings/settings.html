@@ -1,14 +1,10 @@
 <div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h2 translate="settings.title" translate-values="{username: '{{settingsAccount.login}}'}">User settings for [<b>{{settingsAccount.login}}</b>]</h2>
+            <h2 translate="settings.title">User settings</h2>
 
             <div class="alert alert-success" ng-show="success" translate="settings.messages.success">
                 <strong>Settings saved!</strong>
-            </div>
-
-            <div class="alert alert-danger" ng-show="errorEmailExists" translate="settings.messages.error.emailexists">
-                <strong>E-mail is already in use!</strong> Please choose another one.
             </div>
 
             <div class="alert alert-danger" ng-show="error" translate="settings.messages.error.fail">
@@ -55,26 +51,41 @@
                         </p>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label translate="global.form.email">E-mail</label>
-                    <input type="email" class="form-control" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
-                           ng-model="settingsAccount.email" ng-minlength=5 ng-maxlength=100 required maxlength="100">
-                    <div ng-show="form.email.$dirty && form.email.$invalid">
+                    <label translate="global.form.address">Address</label>
+                    <input type="text" class="form-control" name="addressLine1" placeholder="{{'global.form.addressLine1.placeholder' | translate}}"
+                           ng-model="settingsAccount.deliveryDetails.addressLine1" ng-maxlength=100 required maxlength="100">
+                    <input type="text" class="form-control" name="addressLine2" placeholder="{{'global.form.addressLine2.placeholder' | translate}}"
+                           ng-model="settingsAccount.deliveryDetails.addressLine2" ng-maxlength=100 maxlength="100">
+                    <label translate="global.form.postcode">Postcode</label>
+                    <input type="text" class="form-control" name="postcode" placeholder="{{'global.form.postcode.placeholder' | translate}}"
+                           ng-model="settingsAccount.deliveryDetails.postcode" ng-maxlength=100 maxlength="100" required>
+                    <label translate="global.form.city">City</label>
+
+                    <input type="text" class="form-control" name="city" placeholder="{{'global.form.city.placeholder' | translate}}"
+                           ng-model="settingsAccount.deliveryDetails.city" ng-maxlength=100 maxlength="100"
+                           force-selection="true" options="placeOptions" g-places-autocomplete required>
+
+
+                    <div ng-show="form.addressLine1.$dirty && form.addressLine1.$invalid &&
+                     form.city.$dirty && form.city.$invalid &&
+                     form.postcode.$dirty && form.postcode.$invalid">
                         <p class="help-block"
-                               ng-show="form.email.$error.required" translate="global.messages.validate.email.required">
-                            Your e-mail is required.
+                           ng-show="form.addressLine1.$error.required" translate="global.messages.validate.address.required">
+                            Your address is required.
                         </p>
                         <p class="help-block"
-                               ng-show="form.email.$error.email" translate="global.messages.validate.email.invalid">
-                            Your e-mail is invalid.
+                           ng-show="form.city.$error.required" translate="global.messages.validate.city.required">
+                            Your city is required.
                         </p>
                         <p class="help-block"
-                               ng-show="form.email.$error.minlength" translate="global.messages.validate.email.minlength">
-                            Your e-mail is required to be at least 5 characters
+                           ng-show="form.postcode.$error.required" translate="global.messages.validate.postcode.required">
+                            Your postcode is required.
                         </p>
                         <p class="help-block"
-                               ng-show="form.email.$error.maxlength" translate="global.messages.validate.email.maxlength">
-                            Your e-mail cannot be longer than 100 characters
+                           ng-show="form.country.$error.required" translate="global.messages.validate.country.required">
+                            Your country is required.
                         </p>
                     </div>
                 </div>

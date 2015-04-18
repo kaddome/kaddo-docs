@@ -1,5 +1,6 @@
 package com.hoozad.pilot.web.rest.dto;
 
+import com.hoozad.pilot.domain.DeliveryDetails;
 import com.hoozad.pilot.domain.ExternalAccount;
 
 import javax.validation.constraints.Pattern;
@@ -17,9 +18,8 @@ public class UserDTO {
 
     private String lastName;
 
-    private String email;
-
     private String langKey;
+    private DeliveryDetails deliveryDetails;
 
     private List<String> roles;
 
@@ -28,20 +28,19 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String login, String firstName, String lastName, String email, String langKey,
-                   List<String> roles) {
+    public UserDTO(String login, String firstName, String lastName, String langKey,
+                   DeliveryDetails deliveryDetails, List<String> roles) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.langKey = langKey;
         this.roles = roles;
+        this.deliveryDetails = deliveryDetails;
     }
 
-    public UserDTO(String firstName, String lastName, String email, ExternalAccount externalAccount) {
+    public UserDTO(String firstName, String lastName, ExternalAccount externalAccount) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.externalAccounts.add(externalAccount);
     }
 
@@ -57,10 +56,6 @@ public class UserDTO {
         return lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getLangKey() {
         return langKey;
     }
@@ -73,13 +68,16 @@ public class UserDTO {
         return Collections.unmodifiableSet(externalAccounts);
     }
 
+    public DeliveryDetails getDeliveryDetails() {
+        return deliveryDetails;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
         "login='" + login + '\'' +
         ", firstName='" + firstName + '\'' +
         ", lastName='" + lastName + '\'' +
-        ", email='" + email + '\'' +
         ", langKey='" + langKey + '\'' +
         ", roles=" + roles +
         ", externalAccounts=" + externalAccounts +

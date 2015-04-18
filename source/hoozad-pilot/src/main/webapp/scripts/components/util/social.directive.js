@@ -4,8 +4,7 @@ angular.module('hoozadApp')
     .directive('jhSocial', function() {
         // these link to functionality provided by spring-social
         var authLinks = {
-            'facebook': '/auth/facebook?scope=public_profile,user_friends',
-            'google-plus': '/auth/google?scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
+            'facebook': 'http://localhost:8080/auth/facebook?scope=public_profile,user_friends'
         };
         return {
             restrict: 'E',

@@ -31,9 +31,8 @@ describe('Controllers Tests ', function () {
 
         it('should save account', function () {
             //GIVEN
-            var account = {firstName: "John", lastName: "Doe"};
+            var account = {firstName: "John", lastName: "Doe", deliveryDetails:{city:{formatted_address : "London, UK"}}};
             $scope.settingsAccount = account;
-
             //SET SPY
             spyOn(Principal, 'identity').and.callThrough();
 

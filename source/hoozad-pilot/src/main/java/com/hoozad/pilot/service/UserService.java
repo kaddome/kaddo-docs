@@ -1,6 +1,7 @@
 package com.hoozad.pilot.service;
 
 import com.hoozad.pilot.domain.Authority;
+import com.hoozad.pilot.domain.DeliveryDetails;
 import com.hoozad.pilot.domain.ExternalAccount;
 import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.AuthorityRepository;
@@ -35,15 +36,12 @@ public class UserService {
     private AuthorityRepository authorityRepository;
 
     void checkForDuplicateUser(User user) {
-
         if (userRepository.findOneByLogin(user.getLogin()).isPresent()) {
             throw new RegistrationException("login already in use");
-        } else if (userRepository.findOneByEmail(user.getEmail()).isPresent()) {
-            new RegistrationException("e-mail address already in use");
         }
     }
 
-    public User createUserInformation(String login, String firstName, String lastName, String email,
+    public User createUserInformation(String login, String firstName, String lastName,
                                       String langKey, ExternalAccount externalAccount) {
         User newUser = new User();
         Authority authority = authorityRepository.findOne("ROLE_USER");
@@ -54,7 +52,6 @@ public class UserService {
         newUser.setLogin(login);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
-        newUser.setEmail(email);
         newUser.setLangKey(langKey);
 
         checkForDuplicateUser(newUser);
@@ -63,11 +60,11 @@ public class UserService {
         return newUser;
     }
 
-    public void updateUserInformation(String firstName, String lastName, String email) {
+    public void updateUserInformation(String firstName, String lastName, DeliveryDetails deliveryDetails) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
             u.setLastName(lastName);
-            u.setEmail(email);
+            u.setDeliveryDetails(deliveryDetails);
             userRepository.save(u);
             log.debug("Changed Information for User: {}", u);
         });
