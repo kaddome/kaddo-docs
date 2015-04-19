@@ -104,7 +104,7 @@ dependencies {
         exclude module: 'spring-boot-starter-tomcat'
     }
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: spring_boot_version
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-cloudfoundry-connector', version: spring_cloud_version
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-heroku-connector', version: spring_cloud_version
     compile group: 'org.springframework.cloud', name: 'spring-cloud-spring-service-connector', version: spring_cloud_version
     compile group: 'org.springframework.cloud', name: 'spring-cloud-localconfig-connector', version: spring_cloud_version
     compile group: 'org.springframework.boot', name:'spring-boot-starter-social-facebook'
@@ -138,7 +138,8 @@ task wrapper(type: Wrapper) {
 
 test.dependsOn grunt_test
 grunt_build.dependsOn installGrunt, npmInstall
-
 build.dependsOn grunt_build, test
 build.mustRunAfter grunt_build
+bootRun.dependsOn build
+
 task stage dependsOn build
