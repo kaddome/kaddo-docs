@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar build/libs/hoozad-pilot.jar --spring.profiles.active=int --port $PORT
+web: java $JAVA_OPTS -jar build/libs/hoozad-pilot.jar -Dspring.profiles.active=int -Dserver.port=$PORT

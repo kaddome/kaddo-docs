@@ -1,6 +1,3 @@
-server:
-    port: 8080
-
 spring:
     profiles:
         active: dev
@@ -12,7 +9,7 @@ spring:
             username: hoozad
             password: h00zad
     mail:
-        baseUrl: http://localhost:8080
+        baseUrl: http://localhost:${server.port}
 
     thymeleaf:
         mode: XHTML

@@ -9,10 +9,9 @@ spring:
             host: localhost
             port: 27017
             database: hoozad
-    
 
     mail:
-        baseUrl: http://localhost:8080
+        baseUrl: http://localhost:${server.port}
 
     thymeleaf:
         mode: XHTML
