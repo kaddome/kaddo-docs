@@ -1,6 +1,5 @@
 package com.hoozad.pilot;
 
-import com.hoozad.pilot.config.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +14,10 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+
+import static com.hoozad.pilot.config.Constants.DEFAULT_SERVER_PORT;
+import static com.hoozad.pilot.config.Constants.SPRING_PROFILE_DEVELOPMENT;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
@@ -60,7 +63,10 @@ public class Application {
      */
     private static void addDefaultProfile(SpringApplication app, SimpleCommandLinePropertySource source) {
         if (!source.containsProperty("spring.profiles.active")) {
-            app.setAdditionalProfiles(Constants.SPRING_PROFILE_DEVELOPMENT);
+            app.setAdditionalProfiles(SPRING_PROFILE_DEVELOPMENT);
+        }
+        if (!source.containsProperty("server.port")) {
+            app.setDefaultProperties(Collections.singletonMap("server.port", DEFAULT_SERVER_PORT));
         }
     }
 }

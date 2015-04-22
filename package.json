@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "Description for hoozad",
   "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexfdz/hoozad"
+  },
   "devDependencies": {
     "grunt": "0.4.5",
     "grunt-autoprefixer": "0.7.5",
@@ -47,6 +51,7 @@
     "grunt-bower-task": "~0.4.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.0",
+    "npm": ">=2.1.x"
   }
 }

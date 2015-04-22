@@ -9,10 +9,12 @@ spring:
             host: localhost
             port: 27017
             database: hoozad
-    
-
+    social:
+        facebook:
+                 clientId: 472039716296566
+                 clientSecret: bceb8b649c82f0fc3703cfb9cedcf902
     mail:
-        baseUrl: http://localhost:8080
+        baseUrl: http://localhost:${server.port}
 
     thymeleaf:
         mode: XHTML

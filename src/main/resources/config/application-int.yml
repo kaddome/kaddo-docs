@@ -1,18 +1,23 @@
 spring:
     profiles:
-        active: prod
+        active: dev
     data:
         mongodb:
-            host: localhost
-            port: 27017
+            host: ds061370.mongolab.com
+            port: 61370
             database: hoozad
-
+            username: hoozad
+            password: h00zad
+    social:
+        facebook:
+                 clientId: 472040512963153
+                 clientSecret: f3dc6cc255c9ff82bb4a5658506a3ace
     mail:
         baseUrl: http://localhost:${server.port}
 
     thymeleaf:
         mode: XHTML
-        cache: true
+        cache: false
 
 metrics:
     jmx.enabled: true

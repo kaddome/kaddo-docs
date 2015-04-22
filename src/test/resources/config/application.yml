@@ -1,5 +1,4 @@
 server:
-    port: 10344
     address: localhost
 
 # security configuration (this key should be unique for your application, and kept secret)
@@ -25,7 +24,7 @@ metrics:
     jmx.enabled: false
 
 swagger:
-    apiDocsLocation: http://localhost:8080
+    apiDocsLocation: http://localhost:${server.port}
     title: jhipster API
     description: jhipster applications and beyond!
     termsOfServiceUrl: http://jhipster.github.io/
