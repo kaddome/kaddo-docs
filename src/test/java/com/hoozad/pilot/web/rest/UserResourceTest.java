@@ -3,8 +3,8 @@ package com.hoozad.pilot.web.rest;
 import com.hoozad.pilot.Application;
 import com.hoozad.pilot.config.MongoConfiguration;
 import com.hoozad.pilot.repository.UserRepository;
+import com.hoozad.pilot.service.UserService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -38,6 +38,8 @@ public class UserResourceTest {
 
     @Inject
     private UserRepository userRepository;
+    @Inject
+    private UserService userService;
 
     private MockMvc restUserMockMvc;
 
@@ -49,19 +51,34 @@ public class UserResourceTest {
     }
 
     @Test
-    @Ignore("Tests rely on mongeez data, this is a problem in Heroku")
     public void testGetExistingUser() throws Exception {
         restUserMockMvc.perform(get("/api/users/admin")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.lastName").value("Administrator"));
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(jsonPath("$.lastName").value("Administrator"));
     }
 
     @Test
     public void testGetUnknownUser() throws Exception {
         restUserMockMvc.perform(get("/api/users/unknown")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testGetDeliveryDetails() throws Exception {
+        restUserMockMvc.perform(get("/api/users/admin/delivery_details")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(jsonPath("$.city").value("unknown"));
+    }
+
+    @Test
+    public void testGetDeliveryDetailsForUnknownUser() throws Exception {
+        restUserMockMvc.perform(get("/api/users/unknown/delivery_details")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
     }
 }

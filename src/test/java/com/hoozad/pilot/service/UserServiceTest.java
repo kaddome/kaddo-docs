@@ -7,7 +7,6 @@ import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.PersistentTokenRepository;
 import com.hoozad.pilot.repository.UserRepository;
 import org.joda.time.LocalDate;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -43,7 +42,6 @@ public class UserServiceTest {
 
 
     @Test
-    @Ignore("Tests rely on mongeez data, this is a problem in Heroku")
     public void testRemoveOldPersistentTokens() {
         User admin = userRepository.findOneByLogin("admin").get();
         int existingCount = persistentTokenRepository.findByUser(admin).size();
