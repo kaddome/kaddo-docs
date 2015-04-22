@@ -7,6 +7,8 @@ import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.PersistentTokenRepository;
 import com.hoozad.pilot.repository.UserRepository;
 import org.joda.time.LocalDate;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -39,18 +41,27 @@ public class UserServiceTest {
 
     @Inject
     private UserService userService;
+    private User existingUser;
 
+    @Before
+    public void setup() {
+        this.existingUser = existingUser("existing_user");
+    }
+
+    @After
+    public void removeTestUser() {
+        userRepository.delete(existingUser);
+    }
 
     @Test
     public void testRemoveOldPersistentTokens() {
-        User admin = userRepository.findOneByLogin("admin").get();
-        int existingCount = persistentTokenRepository.findByUser(admin).size();
-        generateUserToken(admin, "1111-1111", new LocalDate());
+        int existingCount = persistentTokenRepository.findByUser(existingUser).size();
+        generateUserToken(existingUser, "1111-1111", new LocalDate());
         LocalDate now = new LocalDate();
-        generateUserToken(admin, "2222-2222", now.minusDays(32));
-        assertThat(persistentTokenRepository.findByUser(admin)).hasSize(existingCount + 2);
+        generateUserToken(existingUser, "2222-2222", now.minusDays(32));
+        assertThat(persistentTokenRepository.findByUser(existingUser)).hasSize(existingCount + 2);
         userService.removeOldPersistentTokens();
-        assertThat(persistentTokenRepository.findByUser(admin)).hasSize(existingCount + 1);
+        assertThat(persistentTokenRepository.findByUser(existingUser)).hasSize(existingCount + 1);
     }
 
     private void generateUserToken(User user, String tokenSeries, LocalDate localDate) {
@@ -62,5 +73,9 @@ public class UserServiceTest {
         token.setIpAddress("127.0.0.1");
         token.setUserAgent("Test agent");
         persistentTokenRepository.save(token);
+    }
+
+    private User existingUser(String login) {
+        return userService.createUserInformation(login, "First name", "Last name", "en", null);
     }
 }
