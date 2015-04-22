@@ -1,4 +1,5 @@
 {
+    "_comment": "Heroku Pull requests apps definition (https://devcenter.heroku.com/articles/github-integration#automatic-deploys)",
     "name": "hoozad-pilot",
     "description": "Hoozad",
     "website": "https://github.com/alexfdz/hoozad",
