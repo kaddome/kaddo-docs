@@ -2,8 +2,11 @@ package com.hoozad.pilot.web.rest;
 
 import com.hoozad.pilot.Application;
 import com.hoozad.pilot.config.MongoConfiguration;
+import com.hoozad.pilot.domain.DeliveryDetails;
+import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.UserRepository;
 import com.hoozad.pilot.service.UserService;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +43,7 @@ public class UserResourceTest {
     private UserRepository userRepository;
     @Inject
     private UserService userService;
+    private User existingUser;
 
     private MockMvc restUserMockMvc;
 
@@ -48,15 +52,21 @@ public class UserResourceTest {
         UserResource userResource = new UserResource();
         ReflectionTestUtils.setField(userResource, "userRepository", userRepository);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).build();
+        this.existingUser = existingUser("existing_user");
+    }
+
+    @After
+    public void removeTestUser() {
+        userRepository.delete(existingUser);
     }
 
     @Test
     public void testGetExistingUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/admin")
+        restUserMockMvc.perform(get("/api/users/existing_user")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$.lastName").value("Administrator"));
+            .andExpect(jsonPath("$.lastName").value(existingUser.getLastName()));
     }
 
     @Test
@@ -68,11 +78,11 @@ public class UserResourceTest {
 
     @Test
     public void testGetDeliveryDetails() throws Exception {
-        restUserMockMvc.perform(get("/api/users/admin/delivery_details")
+        restUserMockMvc.perform(get("/api/users/existing_user/delivery_details")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$.city").value("unknown"));
+            .andExpect(jsonPath("$.city").value(existingUser.getDeliveryDetails().getCity()));
     }
 
     @Test
@@ -80,5 +90,20 @@ public class UserResourceTest {
         restUserMockMvc.perform(get("/api/users/unknown/delivery_details")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
+    }
+
+    private User existingUser(String login) {
+        User user = userService.createUserInformation(login, "First name", "Last name", "en", null);
+        user.setDeliveryDetails(testDeliveryDetails());
+        userRepository.save(user);
+        return user;
+    }
+
+    private DeliveryDetails testDeliveryDetails() {
+        DeliveryDetails deliveryDetails = new DeliveryDetails();
+        deliveryDetails.setAddressLine1("Address line 1");
+        deliveryDetails.setCity("city");
+        deliveryDetails.setPostcode("postcode");
+        return deliveryDetails;
     }
 }
