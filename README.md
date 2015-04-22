@@ -18,5 +18,6 @@ http://karma-runner.github.io/0.12/intro/installation.html
 ```bash
 heroku apps:create hoozad-pilot
 heroku buildpack:set https://github.com/heroku/heroku-buildpack-gradle.git -a hoozad-pilot
+heroku domains:add int.hoozad.com
 git push heroku master  
 ```

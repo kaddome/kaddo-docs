@@ -8,6 +8,10 @@ spring:
             database: hoozad
             username: hoozad
             password: h00zad
+    social:
+        facebook:
+                 clientId: 472040512963153
+                 clientSecret: f3dc6cc255c9ff82bb4a5658506a3ace
     mail:
         baseUrl: http://localhost:${server.port}
 
