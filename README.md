@@ -1,7 +1,7 @@
 ## README for hoozad
 
 ### Requirements
-* MongoDB
+* MongoDB shell version: 3.0.2
 * Java 8
 
 
@@ -15,9 +15,11 @@ http://karma-runner.github.io/0.12/intro/installation.html
 
 #### Heroku integration
 
-```bash
-heroku apps:create hoozad-pilot
-heroku buildpack:set https://github.com/heroku/heroku-buildpack-gradle.git -a hoozad-pilot
-heroku domains:add int.hoozad.com
-git push heroku master  
+* heroku-toolbelt/3.31
+
+```shell
+hoozad$ heroku apps:create hoozad-pilot
+hoozad$ heroku buildpack:set https://github.com/heroku/heroku-buildpack-gradle.git -a hoozad-pilot
+hoozad$ heroku domains:add int.hoozad.com
+hoozad$ git push heroku master  
 ```
