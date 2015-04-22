@@ -6,11 +6,11 @@ spring:
         active: dev
     data:
         mongodb:
-            host: localhost
-            port: 27017
+            host: ds061370.mongolab.com
+            port: 61370
             database: hoozad
-    
-
+            username: hoozad
+            password: h00zad
     mail:
         baseUrl: http://localhost:8080
 
