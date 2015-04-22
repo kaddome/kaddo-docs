@@ -1,0 +1,19 @@
+{
+    "name": "hoozad-pilot",
+    "description": "Hoozad",
+    "website": "https://github.com/alexfdz/hoozad",
+    "repository": "https://github.com/alexfdz/hoozad",
+    "success_url": "/",
+    "scripts": {},
+    "env": {
+        "BUILDPACK_URL": {
+            "required": true
+        },
+        "JAVA_OPTS": {
+            "required": true
+        }
+    },
+    "addons": [
+        "logentries"
+    ]
+}
