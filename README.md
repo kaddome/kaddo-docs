@@ -4,6 +4,8 @@
 * MongoDB shell version: 3.0.2
 * Java 8
 
+### Links
+* [Tasks](https://waffle.io/alexfdz/hoozad)
 
 ### Commands
 
