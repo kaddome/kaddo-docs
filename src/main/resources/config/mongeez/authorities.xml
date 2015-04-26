@@ -3,6 +3,7 @@
         <script>
             db.T_AUTHORITY.insert({"_id" : "ROLE_ADMIN"});
             db.T_AUTHORITY.insert({"_id" : "ROLE_USER"});
+            db.T_AUTHORITY.insert({"_id" : "ROLE_ECOMMERCE"});
         </script>
     </changeSet>
 </mongoChangeLog>

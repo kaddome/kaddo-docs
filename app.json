@@ -1,0 +1,20 @@
+{
+    "_comment": "Heroku Pull requests apps definition (https://devcenter.heroku.com/articles/github-integration#automatic-deploys)",
+    "name": "hoozad-pilot",
+    "description": "Hoozad",
+    "website": "https://github.com/alexfdz/hoozad",
+    "repository": "https://github.com/alexfdz/hoozad",
+    "success_url": "/",
+    "scripts": {},
+    "env": {
+        "BUILDPACK_URL": {
+            "required": true
+        },
+        "JAVA_OPTS": {
+            "required": true
+        }
+    },
+    "addons": [
+        "logentries"
+    ]
+}
