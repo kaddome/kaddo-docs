@@ -4,8 +4,11 @@ import com.hoozad.pilot.Application;
 import com.hoozad.pilot.config.MongoConfiguration;
 import com.hoozad.pilot.domain.DeliveryDetails;
 import com.hoozad.pilot.domain.User;
+import com.hoozad.pilot.repository.AuthorityRepository;
 import com.hoozad.pilot.repository.UserRepository;
+import com.hoozad.pilot.security.AuthoritiesConstants;
 import com.hoozad.pilot.service.UserService;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,6 +46,8 @@ public class UserResourceTest {
     @Inject
     private UserRepository userRepository;
     @Inject
+    private AuthorityRepository authorityRepository;
+    @Inject
     private UserService userService;
     @Inject
     private WebApplicationContext wac;
@@ -51,25 +56,33 @@ public class UserResourceTest {
 
     private User existingUser;
     private MockMvc mockMvc;
+    private User ecommerceUser;
 
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(wac).dispatchOptions(true).addFilter(springSecurityFilter).build();
-        this.existingUser = existingUser("existing_user");
+        this.ecommerceUser = existingUser("ecommerce_user", AuthoritiesConstants.ECOMMERCE);
+        this.existingUser = existingUser("existing_user", AuthoritiesConstants.USER);
     }
 
     @After
     public void removeTestUser() {
         userRepository.delete(existingUser);
+        userRepository.delete(ecommerceUser);
     }
 
     @Test
     public void testGetExistingUser() throws Exception {
         mockMvc.perform(get("/api/users/existing_user")
+            .header("Authorization", authorizationFor("ecommerce_user"))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andExpect(jsonPath("$.lastName").value(existingUser.getLastName()));
+    }
+
+    private String authorizationFor(String username) {
+        return  "Basic " + new String(Base64.encodeBase64((username + ":").getBytes()));
     }
 
     @Test
@@ -95,9 +108,10 @@ public class UserResourceTest {
             .andExpect(status().isNotFound());
     }
 
-    private User existingUser(String login) {
+    private User existingUser(String login, String authority) {
         User user = userService.createUserInformation(login, "First name", "Last name", "en", null);
         user.setDeliveryDetails(testDeliveryDetails());
+        user.getAuthorities().add(authorityRepository.findOne(authority));
         userRepository.save(user);
         return user;
     }
