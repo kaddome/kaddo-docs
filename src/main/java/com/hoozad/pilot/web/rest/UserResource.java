@@ -46,6 +46,7 @@ public class UserResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @RolesAllowed(AuthoritiesConstants.ADMIN)
     ResponseEntity<DeliveryDetails> getDeliveryDetails(@PathVariable String login) {
         log.debug("REST request to get User delivery details : {}", login);
         return userRepository.findOneByLogin(login)
