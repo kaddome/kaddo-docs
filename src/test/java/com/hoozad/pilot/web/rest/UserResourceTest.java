@@ -14,11 +14,11 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.inject.Inject;
 
@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
  * Test class for the UserResource REST controller.
@@ -43,15 +44,17 @@ public class UserResourceTest {
     private UserRepository userRepository;
     @Inject
     private UserService userService;
-    private User existingUser;
+    @Inject
+    private WebApplicationContext wac;
+    @Inject
+    private FilterChainProxy springSecurityFilter;
 
-    private MockMvc restUserMockMvc;
+    private User existingUser;
+    private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        UserResource userResource = new UserResource();
-        ReflectionTestUtils.setField(userResource, "userRepository", userRepository);
-        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).build();
+        this.mockMvc = webAppContextSetup(wac).dispatchOptions(true).addFilter(springSecurityFilter).build();
         this.existingUser = existingUser("existing_user");
     }
 
@@ -62,7 +65,7 @@ public class UserResourceTest {
 
     @Test
     public void testGetExistingUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/existing_user")
+        mockMvc.perform(get("/api/users/existing_user")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
@@ -71,14 +74,14 @@ public class UserResourceTest {
 
     @Test
     public void testGetUnknownUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/unknown")
+        mockMvc.perform(get("/api/users/unknown")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
 
     @Test
     public void testGetDeliveryDetails() throws Exception {
-        restUserMockMvc.perform(get("/api/users/existing_user/delivery_details")
+        mockMvc.perform(get("/api/users/existing_user/delivery_details")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
@@ -87,7 +90,7 @@ public class UserResourceTest {
 
     @Test
     public void testGetDeliveryDetailsForUnknownUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/unknown/delivery_details")
+        mockMvc.perform(get("/api/users/unknown/delivery_details")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
