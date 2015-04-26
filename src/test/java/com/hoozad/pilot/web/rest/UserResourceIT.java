@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 @IntegrationTest
 @Import(MongoConfiguration.class)
-public class UserResourceTest {
+public class UserResourceIT {
 
     @Inject
     private UserRepository userRepository;
@@ -87,42 +87,6 @@ public class UserResourceTest {
     public void testGetUnknownUser() throws Exception {
         mockMvc.perform(get("/api/users/unknown")
                 .header("Authorization", authorizationFor("existing_user"))
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void testGetDeliveryDetails() throws Exception {
-        mockMvc.perform(get("/api/users/existing_user/delivery_details")
-                .header("Authorization", authorizationFor("e_commerce_user"))
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.city").value(existingUser.getDeliveryDetails().getCity()));
-    }
-
-    @Test
-    public void testGetDeliveryDetailsForUnAcceptedButExistingECommerceUser() throws Exception {
-        mockMvc.perform(get("/api/users/existing_user/delivery_details")
-                .header("Authorization", authorizationFor("existing_user"))
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
-
-    }
-
-    @Test
-    public void testGetDeliveryDetailsForUnAcceptedAndNotExistingECommerceUser() throws Exception {
-        mockMvc.perform(get("/api/users/existing_user/delivery_details")
-                .header("Authorization", authorizationFor("non_existing_e_commerce_user"))
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized());
-
-    }
-
-    @Test
-    public void testGetDeliveryDetailsForUnknownUser() throws Exception {
-        mockMvc.perform(get("/api/users/unknown/delivery_details")
-                .header("Authorization", authorizationFor("e_commerce_user"))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
