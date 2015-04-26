@@ -26,9 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.inject.Inject;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
@@ -61,7 +59,7 @@ public class UserResourceTest {
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(wac).dispatchOptions(true).addFilter(springSecurityFilter).build();
-        this.ecommerceUser = existingUser("ecommerce_user", AuthoritiesConstants.ECOMMERCE);
+        this.ecommerceUser = existingUser("e_commerce_user", AuthoritiesConstants.ECOMMERCE);
         this.existingUser = existingUser("existing_user", AuthoritiesConstants.USER);
     }
 
@@ -74,38 +72,59 @@ public class UserResourceTest {
     @Test
     public void testGetExistingUser() throws Exception {
         mockMvc.perform(get("/api/users/existing_user")
-            .header("Authorization", authorizationFor("ecommerce_user"))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$.lastName").value(existingUser.getLastName()));
+                .header("Authorization", authorizationFor("existing_user"))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.lastName").value(existingUser.getLastName()));
     }
 
     private String authorizationFor(String username) {
-        return  "Basic " + new String(Base64.encodeBase64((username + ":").getBytes()));
+        return "Basic " + new String(Base64.encodeBase64((username + ":").getBytes()));
     }
 
     @Test
     public void testGetUnknownUser() throws Exception {
         mockMvc.perform(get("/api/users/unknown")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .header("Authorization", authorizationFor("existing_user"))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
     public void testGetDeliveryDetails() throws Exception {
         mockMvc.perform(get("/api/users/existing_user/delivery_details")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$.city").value(existingUser.getDeliveryDetails().getCity()));
+                .header("Authorization", authorizationFor("e_commerce_user"))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.city").value(existingUser.getDeliveryDetails().getCity()));
+    }
+
+    @Test
+    public void testGetDeliveryDetailsForUnAcceptedButExistingECommerceUser() throws Exception {
+        mockMvc.perform(get("/api/users/existing_user/delivery_details")
+                .header("Authorization", authorizationFor("existing_user"))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void testGetDeliveryDetailsForUnAcceptedAndNotExistingECommerceUser() throws Exception {
+        mockMvc.perform(get("/api/users/existing_user/delivery_details")
+                .header("Authorization", authorizationFor("non_existing_e_commerce_user"))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+
     }
 
     @Test
     public void testGetDeliveryDetailsForUnknownUser() throws Exception {
         mockMvc.perform(get("/api/users/unknown/delivery_details")
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
+                .header("Authorization", authorizationFor("e_commerce_user"))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     private User existingUser(String login, String authority) {
