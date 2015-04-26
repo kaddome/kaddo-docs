@@ -51,7 +51,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         User user = getUser(login);
         Collection<GrantedAuthority> grantedAuthorities = getGrantedAuthorities(user);
         log.debug("Login successful");
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), "n/a", grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), "", grantedAuthorities);
     }
 
     @Override
@@ -61,6 +61,6 @@ public class UserDetailsService implements org.springframework.security.core.use
         User user = getUser(userId);
         Collection<GrantedAuthority> grantedAuthorities = getGrantedAuthorities(user);
         log.debug("Login successful");
-        return new SocialUser(user.getLogin(), "n/a", grantedAuthorities);
+        return new SocialUser(user.getLogin(), "", grantedAuthorities);
     }
 }

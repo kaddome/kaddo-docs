@@ -56,12 +56,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+
+
     /**
      * Build a configurer that can be applied to an HttpSecurity instance. When the configurer is applied,
      * Spring Social Security's {@link org.springframework.social.security.SocialAuthenticationFilter}
      * will be added to the HttpSecurity's SecurityFilterChain.
      *
-     * @return
+     * @returnauthenticationEntryPoint
      */
     protected SpringSocialConfigurer buildSpringSocialConfigurer() {
         // build an AuthenticationFailureHandler that is aware of our own exception types
@@ -110,13 +112,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .rememberMeServices(rememberMeServices)
             .key(env.getProperty("jhipster.security.rememberme.key"))
         .and()
-            .formLogin()
-            .loginProcessingUrl("/api/authentication")
-            .successHandler(ajaxAuthenticationSuccessHandler)
-            .failureHandler(ajaxAuthenticationFailureHandler)
-            .usernameParameter("j_username")
-            .passwordParameter("j_password")
-            .permitAll()
+            .httpBasic()
         .and()
             .logout()
             .logoutUrl("/api/logout")
@@ -132,6 +128,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/users/*/delivery_details").hasAuthority(AuthoritiesConstants.ECOMMERCE)
                 .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/**").authenticated()
                 .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
