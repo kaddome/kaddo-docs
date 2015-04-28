@@ -85,12 +85,14 @@ public class UserDTO {
     @Override
     public String toString() {
         return "UserDTO{" +
-        "login='" + login + '\'' +
-        ", firstName='" + firstName + '\'' +
-        ", lastName='" + lastName + '\'' +
-        ", langKey='" + langKey + '\'' +
-        ", roles=" + roles +
-        ", externalAccounts=" + externalAccounts +
-        '}';
+                "login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", langKey='" + langKey + '\'' +
+                ", deliveryDetails=" + deliveryDetails +
+                ", roles=" + roles +
+                ", openProfile=" + openProfile +
+                ", externalAccounts=" + externalAccounts +
+                '}';
     }
 }
