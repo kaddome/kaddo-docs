@@ -23,6 +23,8 @@ public class UserDTO {
 
     private List<String> roles;
 
+    private boolean openProfile;
+
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
 
     public UserDTO() {
@@ -70,6 +72,14 @@ public class UserDTO {
 
     public DeliveryDetails getDeliveryDetails() {
         return deliveryDetails;
+    }
+
+    public boolean isOpenProfile() {
+        return openProfile;
+    }
+
+    public void setOpenProfile(boolean openProfile) {
+        this.openProfile = openProfile;
     }
 
     @Override
