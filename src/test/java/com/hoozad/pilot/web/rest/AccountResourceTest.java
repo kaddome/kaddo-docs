@@ -8,6 +8,7 @@ import com.hoozad.pilot.repository.UserRepository;
 import com.hoozad.pilot.security.AuthoritiesConstants;
 import com.hoozad.pilot.service.UserService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -94,6 +95,7 @@ public class AccountResourceTest {
         user.setFirstName("john");
         user.setLastName("doe");
         user.setAuthorities(authorities);
+        user.setOpenProfile(true);
         when(userService.getUserWithAuthorities()).thenReturn(user);
 
         restUserMockMvc.perform(get("/api/account")
@@ -102,7 +104,16 @@ public class AccountResourceTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.login").value("test"))
                 .andExpect(jsonPath("$.firstName").value("john"))
-                .andExpect(jsonPath("$.roles").value(AuthoritiesConstants.ADMIN));
+                .andExpect(jsonPath("$.roles").value(AuthoritiesConstants.ADMIN))
+                .andExpect(jsonPath("$.openProfile").value(true));
+    }
+
+    @Test
+    @Ignore
+    public void testPostForUpdatingAccountDetails() throws Exception {
+        /**
+         * TODO Add a new integration test here
+         */
     }
 
     @Test

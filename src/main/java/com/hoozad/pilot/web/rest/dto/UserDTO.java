@@ -31,13 +31,14 @@ public class UserDTO {
     }
 
     public UserDTO(String login, String firstName, String lastName, String langKey,
-                   DeliveryDetails deliveryDetails, List<String> roles) {
+                   DeliveryDetails deliveryDetails, List<String> roles, boolean isOpenProfile) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.langKey = langKey;
         this.roles = roles;
         this.deliveryDetails = deliveryDetails;
+        this.openProfile = isOpenProfile;
     }
 
     public UserDTO(String firstName, String lastName, ExternalAccount externalAccount) {

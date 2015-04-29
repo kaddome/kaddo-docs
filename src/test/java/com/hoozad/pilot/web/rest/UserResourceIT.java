@@ -76,7 +76,13 @@ public class UserResourceIT {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.lastName").value(existingUser.getLastName()));
+
+                .andExpect(jsonPath("$.lastName").value(existingUser.getLastName()))
+                .andExpect(jsonPath("$.openProfile").value(true));
+
+        /**
+         * TODO Need to add more test coverage here for all the fields of the User domain object
+         */
     }
 
     private String authorizationFor(String username) {
@@ -95,6 +101,7 @@ public class UserResourceIT {
         User user = userService.createUserInformation(login, "First name", "Last name", "en", null);
         user.setDeliveryDetails(testDeliveryDetails());
         user.getAuthorities().add(authorityRepository.findOne(authority));
+        user.setOpenProfile(true);
         userRepository.save(user);
         return user;
     }
