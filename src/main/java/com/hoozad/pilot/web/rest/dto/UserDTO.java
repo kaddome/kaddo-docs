@@ -23,19 +23,22 @@ public class UserDTO {
 
     private List<String> roles;
 
+    private boolean openProfile;
+
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
 
     public UserDTO() {
     }
 
     public UserDTO(String login, String firstName, String lastName, String langKey,
-                   DeliveryDetails deliveryDetails, List<String> roles) {
+                   DeliveryDetails deliveryDetails, List<String> roles, boolean isOpenProfile) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.langKey = langKey;
         this.roles = roles;
         this.deliveryDetails = deliveryDetails;
+        this.openProfile = isOpenProfile;
     }
 
     public UserDTO(String firstName, String lastName, ExternalAccount externalAccount) {
@@ -72,15 +75,25 @@ public class UserDTO {
         return deliveryDetails;
     }
 
+    public boolean isOpenProfile() {
+        return openProfile;
+    }
+
+    public void setOpenProfile(boolean openProfile) {
+        this.openProfile = openProfile;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
-        "login='" + login + '\'' +
-        ", firstName='" + firstName + '\'' +
-        ", lastName='" + lastName + '\'' +
-        ", langKey='" + langKey + '\'' +
-        ", roles=" + roles +
-        ", externalAccounts=" + externalAccounts +
-        '}';
+                "login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", langKey='" + langKey + '\'' +
+                ", deliveryDetails=" + deliveryDetails +
+                ", roles=" + roles +
+                ", openProfile=" + openProfile +
+                ", externalAccounts=" + externalAccounts +
+                '}';
     }
 }

@@ -45,7 +45,9 @@
             "postcode": "Postcode",
             "postcode.placeholder": "Postcode",
             "country": "Country",
-            "country.placeholder": "Country"
+            "country.placeholder": "Country",
+            "privacy.mode": "Privacy Settings",
+            "open.profile": "I would like to share my delivery details with other hoozad users"
         },
         "messages": {
             "info": {

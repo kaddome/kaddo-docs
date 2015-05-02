@@ -43,6 +43,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
 
+    @Field("open_profile")
+    private boolean openProfile;
+
     public String getId() {
         return id;
     }
@@ -139,7 +142,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", langKey='" + langKey + '\'' +
+            ", openProfile='" + openProfile + '\'' +
             ", externalAccounts=" + externalAccounts +
             "}";
+    }
+
+    public boolean getOpenProfile() {
+        return openProfile;
+    }
+
+    public void setOpenProfile(boolean openProfile) {
+        this.openProfile = openProfile;
     }
 }

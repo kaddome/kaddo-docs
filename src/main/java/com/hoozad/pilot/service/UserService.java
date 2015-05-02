@@ -60,13 +60,14 @@ public class UserService {
         return newUser;
     }
 
-    public void updateUserInformation(String firstName, String lastName, DeliveryDetails deliveryDetails) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
-            u.setFirstName(firstName);
-            u.setLastName(lastName);
-            u.setDeliveryDetails(deliveryDetails);
-            userRepository.save(u);
-            log.debug("Changed Information for User: {}", u);
+    public void updateUserInformation(String firstName, String lastName, DeliveryDetails deliveryDetails, boolean openProfile) {
+        userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(user -> {
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setDeliveryDetails(deliveryDetails);
+            user.setOpenProfile(openProfile);
+            userRepository.save(user);
+            log.debug("Changed Information for User: {}", user);
         });
     }
 

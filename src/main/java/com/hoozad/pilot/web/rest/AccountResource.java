@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,14 +78,11 @@ public class AccountResource {
                     user.getLastName(),
                     user.getLangKey(),
                     user.getDeliveryDetails(),
-                    user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toList())),
+                    user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toList()), user.getOpenProfile()),
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
-    /**
-     * POST  /account -> update the current user information.
-     */
     @RequestMapping(value = "/account",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -89,9 +90,9 @@ public class AccountResource {
     public ResponseEntity<String> saveAccount(@RequestBody UserDTO userDTO) {
         return userRepository
             .findOneByLogin(userDTO.getLogin())
-            .filter(u -> u.getLogin().equals(SecurityUtils.getCurrentLogin()))
-            .map(u -> {
-                userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getDeliveryDetails());
+            .filter(user -> user.getLogin().equals(SecurityUtils.getCurrentLogin()))
+            .map(user -> {
+                userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getDeliveryDetails(), userDTO.isOpenProfile());
                 return new ResponseEntity<String>(HttpStatus.OK);
             })
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
