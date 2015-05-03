@@ -11,7 +11,11 @@ angular.module('hoozadApp')
         });
 
         $scope.save = function () {
-            $scope.settingsAccount.deliveryDetails.city = $scope.settingsAccount.deliveryDetails.city.formatted_address;
+
+            if($scope.settingsAccount.deliveryDetails.city.formatted_address){
+                $scope.settingsAccount.deliveryDetails.city = $scope.settingsAccount.deliveryDetails.city.formatted_address;
+            }
+
             Auth.updateAccount($scope.settingsAccount).then(function() {
                 $scope.error = null;
                 $scope.success = 'OK';
