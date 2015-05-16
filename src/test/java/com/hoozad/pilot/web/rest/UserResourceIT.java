@@ -3,6 +3,7 @@ package com.hoozad.pilot.web.rest;
 import com.hoozad.pilot.Application;
 import com.hoozad.pilot.config.MongoConfiguration;
 import com.hoozad.pilot.domain.DeliveryDetails;
+import com.hoozad.pilot.domain.SharingMode;
 import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.AuthorityRepository;
 import com.hoozad.pilot.repository.UserRepository;
@@ -25,6 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.inject.Inject;
 
+import static com.hoozad.pilot.domain.SharingMode.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -78,7 +80,7 @@ public class UserResourceIT {
                 .andExpect(content().contentType("application/json"))
 
                 .andExpect(jsonPath("$.lastName").value(existingUser.getLastName()))
-                .andExpect(jsonPath("$.openProfile").value(true));
+                .andExpect(jsonPath("$.sharingMode").value(SHARE_WITH_FB_FRIENDS_ONLY.name()));
 
         /**
          * TODO Need to add more test coverage here for all the fields of the User domain object
@@ -101,7 +103,7 @@ public class UserResourceIT {
         User user = userService.createUserInformation(login, "First name", "Last name", "en", null);
         user.setDeliveryDetails(testDeliveryDetails());
         user.getAuthorities().add(authorityRepository.findOne(authority));
-        user.setOpenProfile(true);
+        user.setSharingMode(SHARE_WITH_FB_FRIENDS_ONLY);
         userRepository.save(user);
         return user;
     }

@@ -2,6 +2,7 @@ package com.hoozad.pilot.web.rest;
 
 import com.hoozad.pilot.domain.Authority;
 import com.hoozad.pilot.domain.DeliveryDetails;
+import com.hoozad.pilot.domain.SharingMode;
 import com.hoozad.pilot.domain.User;
 import com.hoozad.pilot.repository.UserRepository;
 import com.hoozad.pilot.security.AuthoritiesConstants;
@@ -22,9 +23,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.hoozad.pilot.domain.SharingMode.*;
 import static com.hoozad.pilot.web.rest.TestUserDataBuilder.buildTestData;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -87,7 +88,7 @@ public class AccountResourceTest {
                 .andExpect(jsonPath("$.login").value("test"))
                 .andExpect(jsonPath("$.firstName").value("john"))
                 .andExpect(jsonPath("$.roles").value(AuthoritiesConstants.ADMIN))
-                .andExpect(jsonPath("$.openProfile").value(true));
+                .andExpect(jsonPath("$.sharingMode").value(SHARE_WITH_FB_FRIENDS_ONLY.name()));
     }
 
     @Test
@@ -104,7 +105,7 @@ public class AccountResourceTest {
                 post("/api/account").accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE).content(updatedUserDetailsAsJSON())
         ).andExpect(status().isOk());
 
-        verify(userService, times(1)).updateUserInformation(anyString(), anyString(), any(DeliveryDetails.class), anyBoolean());
+        verify(userService, times(1)).updateUserInformation(anyString(), anyString(), any(DeliveryDetails.class), any(SharingMode.class));
     }
 
     @Test
@@ -127,7 +128,7 @@ public class AccountResourceTest {
                     addressLine1("Street 1234").
                     addressLine2("Building 123").
                     city("London, UK").
-                    openProfile(true).
+                    sharingMode(OPEN_PROFILE).
                 build();
     }
 
@@ -144,7 +145,7 @@ public class AccountResourceTest {
         user.setFirstName("john");
         user.setLastName("doe");
         user.setAuthorities(createAdminAuthority());
-        user.setOpenProfile(true);
+        user.setSharingMode(SHARE_WITH_FB_FRIENDS_ONLY);
         return user;
     }
 
@@ -155,4 +156,5 @@ public class AccountResourceTest {
         authorities.add(authority);
         return authorities;
     }
+
 }

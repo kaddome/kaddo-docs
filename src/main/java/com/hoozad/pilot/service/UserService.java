@@ -1,9 +1,6 @@
 package com.hoozad.pilot.service;
 
-import com.hoozad.pilot.domain.Authority;
-import com.hoozad.pilot.domain.DeliveryDetails;
-import com.hoozad.pilot.domain.ExternalAccount;
-import com.hoozad.pilot.domain.User;
+import com.hoozad.pilot.domain.*;
 import com.hoozad.pilot.repository.AuthorityRepository;
 import com.hoozad.pilot.repository.PersistentTokenRepository;
 import com.hoozad.pilot.repository.UserRepository;
@@ -53,6 +50,7 @@ public class UserService {
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setLangKey(langKey);
+        newUser.setSharingMode(SharingMode.OPEN_PROFILE);
 
         checkForDuplicateUser(newUser);
         userRepository.save(newUser);
@@ -60,12 +58,12 @@ public class UserService {
         return newUser;
     }
 
-    public void updateUserInformation(String firstName, String lastName, DeliveryDetails deliveryDetails, boolean openProfile) {
+    public void updateUserInformation(String firstName, String lastName, DeliveryDetails deliveryDetails, SharingMode sharingMode) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(user -> {
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setDeliveryDetails(deliveryDetails);
-            user.setOpenProfile(openProfile);
+            user.setSharingMode(sharingMode);
             userRepository.save(user);
             log.debug("Changed Information for User: {}", user);
         });

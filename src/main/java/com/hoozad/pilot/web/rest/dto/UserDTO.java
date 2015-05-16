@@ -2,6 +2,7 @@ package com.hoozad.pilot.web.rest.dto;
 
 import com.hoozad.pilot.domain.DeliveryDetails;
 import com.hoozad.pilot.domain.ExternalAccount;
+import com.hoozad.pilot.domain.SharingMode;
 
 import javax.validation.constraints.Pattern;
 import java.util.Collections;
@@ -23,7 +24,7 @@ public class UserDTO {
 
     private List<String> roles;
 
-    private boolean openProfile;
+    private SharingMode sharingMode;
 
     private Set<ExternalAccount> externalAccounts = new HashSet<>();
 
@@ -31,14 +32,14 @@ public class UserDTO {
     }
 
     public UserDTO(String login, String firstName, String lastName, String langKey,
-                   DeliveryDetails deliveryDetails, List<String> roles, boolean isOpenProfile) {
+                   DeliveryDetails deliveryDetails, List<String> roles, SharingMode sharingMode) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.langKey = langKey;
         this.roles = roles;
         this.deliveryDetails = deliveryDetails;
-        this.openProfile = isOpenProfile;
+        this.sharingMode = sharingMode;
     }
 
     public UserDTO(String firstName, String lastName, ExternalAccount externalAccount) {
@@ -75,12 +76,12 @@ public class UserDTO {
         return deliveryDetails;
     }
 
-    public boolean isOpenProfile() {
-        return openProfile;
+    public SharingMode getSharingMode() {
+        return sharingMode;
     }
 
-    public void setOpenProfile(boolean openProfile) {
-        this.openProfile = openProfile;
+    public void setSharingMode(SharingMode sharingMode) {
+        this.sharingMode = sharingMode;
     }
 
     @Override
@@ -92,7 +93,7 @@ public class UserDTO {
                 ", langKey='" + langKey + '\'' +
                 ", deliveryDetails=" + deliveryDetails +
                 ", roles=" + roles +
-                ", openProfile=" + openProfile +
+                ", sharingMode=" + sharingMode +
                 ", externalAccounts=" + externalAccounts +
                 '}';
     }

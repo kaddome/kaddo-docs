@@ -14,10 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,7 +74,7 @@ public class AccountResource {
                     user.getLastName(),
                     user.getLangKey(),
                     user.getDeliveryDetails(),
-                    user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toList()), user.getOpenProfile()),
+                    user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toList()), user.getSharingMode()),
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
@@ -92,7 +88,7 @@ public class AccountResource {
             .findOneByLogin(userDTO.getLogin())
             .filter(user -> user.getLogin().equals(SecurityUtils.getCurrentLogin()))
             .map(user -> {
-                userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getDeliveryDetails(), userDTO.isOpenProfile());
+                userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getDeliveryDetails(), userDTO.getSharingMode());
                 return new ResponseEntity<String>(HttpStatus.OK);
             })
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));

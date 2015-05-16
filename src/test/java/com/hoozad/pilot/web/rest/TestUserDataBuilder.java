@@ -1,5 +1,6 @@
 package com.hoozad.pilot.web.rest;
 
+import com.hoozad.pilot.domain.SharingMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +18,7 @@ public class TestUserDataBuilder {
     private String country;
     private String userRole;
     private boolean openProfile;
+    private SharingMode sharingMode;
 
     public static TestUserDataBuilder buildTestData() {
         return new TestUserDataBuilder();
@@ -75,8 +77,8 @@ public class TestUserDataBuilder {
         return this;
     }
 
-    public TestUserDataBuilder openProfile(boolean openProfile) {
-        this.openProfile = openProfile;
+    public TestUserDataBuilder sharingMode(SharingMode sharingMode) {
+        this.sharingMode = sharingMode;
         return this;
     }
 
