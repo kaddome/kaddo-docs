@@ -47,7 +47,8 @@
             "country": "Country",
             "country.placeholder": "Country",
             "privacy.mode": "Privacy Settings",
-            "open.profile": "I would like to share my delivery details with other hoozad users"
+            "open.profile": "I would like to share my delivery details with other hoozad users",
+            "open.toFBFriendsOnly": "I would like to share my delivery details only with my Facebook friends!"
         },
         "messages": {
             "info": {

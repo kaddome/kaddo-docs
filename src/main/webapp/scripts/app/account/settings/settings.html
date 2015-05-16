@@ -94,8 +94,13 @@
 
                     <label translate="global.form.privacy.mode">global.form.privacy.mode</label>
                     <div class="radio">
-                        <input name="openProfile" type="radio" ng-model="settingsAccount.openProfile" ng-value="true">
+                        <input name="profileSharingMode" type="radio" ng-model="settingsAccount.sharingMode" value="OPEN_PROFILE">
                         <label translate="global.form.open.profile">global.form.open.profile</label>
+                    </div>
+
+                    <div class="radio">
+                        <input name="profileSharingMode" type="radio" ng-model="settingsAccount.sharingMode" value="SHARE_WITH_FB_FRIENDS_ONLY">
+                        <label translate="global.form.open.toFBFriendsOnly">I would like to share my details with my Facebook friends only.</label>
                     </div>
 
                 </div>
