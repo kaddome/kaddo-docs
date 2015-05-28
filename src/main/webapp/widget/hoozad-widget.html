@@ -1,123 +1,28 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
+<link rel="stylesheet" href="../assets/styles/bootstrap.css">
+<link rel="stylesheet" href="../bower_components/bootstrap-social/bootstrap-social.css">
+<link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+
+
+
 <!-- Defines element markup -->
 <dom-module id="hoozad-widget">
     <template>
         <style>
             :host {
-            display: inline-block;
+                display: inline-block;
+            }
+            .hoozad-widget{
+                width:200px;
+                height: 30px;
             }
         </style>
-        <div id='fb-login-container'>
-            <fb:login-button scope="public_profile" onlogin="FB.customCheckLoginState();" data-auto-logout-link="true"/>
+        <div ng-app="hoozadWidget">
+            <jh-social type='block' target="_top" create-auth-link external-account-provider="'facebook'">{{text}}</jh-social>
         </div>
     </template>
 </dom-module>
 
-<script>
-(function(){
-
-    function statusChangeCallback(response) {
-        if (response.status === 'connected') {
-          // Logged into app and Facebook.
-          handler.fire('facebook-signin-success', {response: response});
-        } else if (response.status === 'not_authorized') {
-          // The person is logged into Facebook, but not into the app.
-          handler.fire('facebook-signin-not-authorized', {response: response});
-        } else {
-          // The person is not logged into Facebook, so we're not sure if
-          // they are logged into this app or not.
-          console.log('User not logged into Facebook');
-        }
-    }
-
-    var FB_APP_ID = '';
-    var FB_APP_XFBML;
-    var handler;
-
-    Polymer({
-        is: 'hoozad-widget',
-        properties: {
-            app: {
-                type: String,
-                value: '00000000'
-            }
-        },
-
-        go: function(params, method) {
-          if(this.graphURL == '') {
-            console.error("No URL specified. Specify the graph API URL using the graphURL attribute.");
-            return;
-          }
-
-          FB.api(this.graphURL, 'get', {}, function(response) {
-            handler.fire('graph-api-response', {response: response});
-          }.bind(this));
-        },
-
-        ready: function() {
-          if(!this.app) {
-              console.error("Missing attribute appID for Facebook Login Button");
-              return;
-          }
-
-          handler = this;
-          FB_APP_ID = this.app;
-          FB_APP_XFBML = this.xfbml;
-
-          var container = this.$['fb-login-container'];
-
-          window.fbAsyncInit = function() {
-              FB.init({
-                  appId      : FB_APP_ID,
-                  cookie     : true,
-                  xfbml      : FB_APP_XFBML,
-                  version    : 'v2.0'
-              });
-
-              FB.getLoginStatus(function(response) {
-                  statusChangeCallback(response);
-              });
-
-              FB.XFBML.parse(container);
-
-              FB.customCheckLoginState = function() {
-                  FB.getLoginStatus(function(response) {
-                      statusChangeCallback(response);
-                  });
-              };
-          };
-
-          if(typeof(FB) == 'undefined') {
-              (function(d, s, id) {
-                  var js, fjs = d.getElementsByTagName(s)[0];
-                  if (d.getElementById(id)) return;
-                  js = d.createElement(s); js.id = id;
-                  js.src = "//connect.facebook.net/en_US/sdk.js";
-                  fjs.parentNode.insertBefore(js, fjs);
-
-              }(document, 'script', 'facebook-jssdk'));
-          }
-        },
-        /**
-         * The `facebook-signin-success` event is fired whenever a
-         * signs in successfully.
-         *
-         * @event facebook-signin-success
-         */
-
-        /**
-         * The `facebook-signin-not-authorized` event is fired whenever a
-         * user is signed into Facebook but not into your app.
-         *
-         * @event facebook-signin-not-authorized
-         */
-
-         /**
-         * The `graph-api-response` event is fired when a response from an API call occurs.
-         *
-         * @event graph-api-response
-         */
-    });
-}());
-</script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="hoozad-widget.js"></script>
