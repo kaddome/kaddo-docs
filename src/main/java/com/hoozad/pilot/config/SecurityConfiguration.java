@@ -80,8 +80,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 public SocialAuthenticationFilter postProcess(SocialAuthenticationFilter object) {
                     // replace the default exception
                     object.setAuthenticationFailureHandler(handler);
-
-                    object.setSignupUrl("/#/register/external");
                     return object;
                 }
             }

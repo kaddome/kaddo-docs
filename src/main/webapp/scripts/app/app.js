@@ -14,8 +14,9 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 .error(function() {
                     if ($rootScope.toState.data.roles.length > 0) {
                         Auth.logout();
-                        $state.go('login');
+
                     }
+                     $state.go('login');
                 });
 
             if (Principal.isIdentityResolved()) {
@@ -85,3 +86,10 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
         tmhDynamicLocaleProvider.useCookieStorage('NG_TRANSLATE_LANG_KEY');
     });
+
+window.onload = function(e) {
+    if(window.opener){
+        window.opener.location.reload();
+        window.close();
+    }
+};
