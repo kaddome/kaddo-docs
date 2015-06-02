@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .factory('MonitoringService', function ($rootScope, $http) {
         return {
             getMetrics: function () {

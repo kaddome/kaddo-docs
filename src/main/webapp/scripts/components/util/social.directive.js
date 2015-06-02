@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .directive('jhSocial', function() {
         // these link to functionality provided by spring-social
         var authLinks = {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .factory('Auth', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account) {
         return {
             login: function (credentials, callback) {

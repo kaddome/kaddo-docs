@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .controller('NavbarController', function ($scope, $location, $state, Auth, Principal) {
         $scope.isAuthenticated = Principal.isAuthenticated;
         $scope.isInRole = Principal.isInRole;

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .factory('AuditsService', function ($http) {
         return {
             findAll: function () {

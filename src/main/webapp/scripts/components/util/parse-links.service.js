@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .service('ParseLinks', function () {
         this.parse = function (header) {
             if (header.length == 0) {

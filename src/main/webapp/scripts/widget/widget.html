@@ -18,28 +18,28 @@
         <div ng-app="hoozadWidget"  ng-controller="MainController">
 
             <div ng-switch="isAuthenticated()">
-                <div class="alert alert-success" ng-switch-when="true">
-                    You are logged in.
+                <div angucomplete-alt ng-switch-when="true" id="search" placeholder="Search people"
+                     pause="300" selected-object="selectedPerson"
+                     local-data="people" search-fields="firstName,surname"
+                     title-field="firstName,surname" description-field="twitter"
+                     image-field="pic" minlength="1"
+                     input-class="form-control form-control-small" match-class="highlight">
                 </div>
-                <div class="alert alert-success" ng-switch-when="false">
+                <div class="alert alert-danger" ng-switch-when="false">
                     You are not logged in.
                 </div>
             </div>
 
-            <div angucomplete-alt id="search" placeholder="Search people"
-                 pause="300" selected-object="selectedPerson"
-                 local-data="people" search-fields="firstName,surname"
-                 title-field="firstName,surname" description-field="twitter"
-                 image-field="pic" minlength="1"
-                 input-class="form-control form-control-small" match-class="highlight">
-            </div>
+
         </div>
     </template>
 </dom-module>
 
 <script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angular-resource/angular-resource.js"></script>
 <script src="../../bower_components/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
 
 <script src="widget.js"></script>
+<script src="../components/auth/services/account.service.js"></script>
 <script src="../components/auth/principal.service.js"></script>
 <script src="main/main.controller.js"></script>

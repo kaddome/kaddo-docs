@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .directive('hasAnyRole', ['Principal', function (Principal) {
         return {
             restrict: 'A',
