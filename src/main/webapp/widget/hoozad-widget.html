@@ -4,9 +4,6 @@
 <link rel="stylesheet" href="../bower_components/bootstrap-social/bootstrap-social.css">
 <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
 
-
-
-<!-- Defines element markup -->
 <dom-module id="hoozad-widget">
     <template>
         <style>
@@ -18,11 +15,19 @@
                 height: 30px;
             }
         </style>
-        <div ng-app="hoozadWidget">
-            <jh-social type='block' target="_top" create-auth-link external-account-provider="'facebook'">{{text}}</jh-social>
+        <div ng-app="hoozadWidget"  ng-controller="MainController">
+            <div angucomplete-alt id="search" placeholder="Search people"
+                 pause="300" selected-object="selectedPerson"
+                 local-data="people" search-fields="firstName,surname"
+                 title-field="firstName,surname" description-field="twitter"
+                 image-field="pic" minlength="1"
+                 input-class="form-control form-control-small" match-class="highlight">
+            </div>
         </div>
     </template>
 </dom-module>
 
 <script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
+
 <script src="hoozad-widget.js"></script>
