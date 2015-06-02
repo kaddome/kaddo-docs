@@ -1,7 +1,9 @@
 'use strict';
 
+angular.module('shared-components', []);
 angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
-    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster', 'google.places'])
+    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate',
+    'ngCacheBuster', 'google.places', 'shared-components'])
 
     .run(function ($rootScope, $location, $http, $state, $translate, Auth, Principal, Language) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {

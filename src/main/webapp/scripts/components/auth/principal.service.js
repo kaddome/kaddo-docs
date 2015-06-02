@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hoozadApp')
+angular.module('shared-components')
     .factory('Principal', function Principal($q, Account) {
         var _identity,
             _authenticated = false;

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('hoozadWidget', ['angucomplete-alt']);
+angular.module('shared-components', []);
+angular.module('hoozadWidget', ['angucomplete-alt', 'shared-components']);
 
 Polymer({
     is: 'hoozad-widget',
