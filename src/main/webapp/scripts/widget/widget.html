@@ -1,8 +1,8 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<link rel="stylesheet" href="../assets/styles/bootstrap.css">
-<link rel="stylesheet" href="../bower_components/bootstrap-social/bootstrap-social.css">
-<link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../assets/styles/bootstrap.css">
+<link rel="stylesheet" href="../../bower_components/bootstrap-social/bootstrap-social.css">
+<link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
 
 <dom-module id="hoozad-widget">
     <template>
@@ -16,6 +16,13 @@
             }
         </style>
         <div ng-app="hoozadWidget"  ng-controller="MainController">
+
+            <div ng-switch="isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true">
+                    You are logged in.
+                </div>
+            </div>
+
             <div angucomplete-alt id="search" placeholder="Search people"
                  pause="300" selected-object="selectedPerson"
                  local-data="people" search-fields="firstName,surname"
@@ -27,7 +34,8 @@
     </template>
 </dom-module>
 
-<script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
 
-<script src="hoozad-widget.js"></script>
+<script src="widget.js"></script>
+<script src="main/main.controller.js"></script>
