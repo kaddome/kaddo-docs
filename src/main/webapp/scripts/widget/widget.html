@@ -23,7 +23,8 @@
                      local-data="people" search-fields="firstName,surname"
                      title-field="firstName,surname" description-field="twitter"
                      image-field="pic" minlength="1"
-                     input-class="form-control form-control-small" match-class="highlight">
+                     input-class="form-control form-control-small" match-class="highlight"
+                     template-url="/scripts/widget/search-item.html">
                 </div>
                 <div ng-switch-when="false">
                     <jh-social type='block' target="_blank" create-auth-link external-account-provider="'facebook'">Sign in with Facebook</jh-social>
@@ -34,8 +35,9 @@
 </dom-module>
 
 <script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 <script src="../../bower_components/angular-resource/angular-resource.js"></script>
-<script src="../../bower_components/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
+<script src="../../bower_components/angucomplete-alt/angucomplete-alt.js"></script>
 
 <script src="widget.js"></script>
 <script src="../components/auth/services/account.service.js"></script>

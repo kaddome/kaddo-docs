@@ -3,6 +3,7 @@ package com.hoozad.pilot.config;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilter;
 import com.codahale.metrics.servlets.MetricsServlet;
+import com.hoozad.pilot.web.filter.CORSFilter;
 import com.hoozad.pilot.web.filter.CachingHttpHeadersFilter;
 import com.hoozad.pilot.web.filter.StaticResourcesProductionFilter;
 import com.hoozad.pilot.web.filter.gzip.GZipServletFilter;
@@ -51,6 +52,7 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
             initStaticResourcesProductionFilter(servletContext, disps);
         }
         initGzipFilter(servletContext, disps);
+        initCORSFilter(servletContext, disps);
         log.info("Web application fully configured");
     }
 
@@ -82,6 +84,17 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         compressingFilter.addMappingForUrlPatterns(disps, true, "/api/*");
         compressingFilter.addMappingForUrlPatterns(disps, true, "/metrics/*");
         compressingFilter.setAsyncSupported(true);
+    }
+
+    /**
+     * Initializes the CORS (Cross Origin Requests) filter.
+     */
+    private void initCORSFilter(ServletContext servletContext, EnumSet<DispatcherType> disps) {
+        log.debug("Registering CORS Filter");
+        FilterRegistration.Dynamic crossOriginFilter = servletContext.addFilter("corsFilter", new CORSFilter());
+        crossOriginFilter.setInitParameters(new HashMap<>());
+        crossOriginFilter.addMappingForUrlPatterns(disps, true, "*");
+        crossOriginFilter.setAsyncSupported(true);
     }
 
     /**
