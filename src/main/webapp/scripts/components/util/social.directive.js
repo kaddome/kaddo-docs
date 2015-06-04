@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('shared-components')
-    .directive('jhSocial', function() {
+    .directive('jhSocial', function($rootScope) {
         // these link to functionality provided by spring-social
         var authLinks = {
-            'facebook': '/auth/facebook?scope=public_profile,user_friends'
+            'facebook': $rootScope.baseUrl + '/auth/facebook?scope=public_profile,user_friends'
         };
         return {
             restrict: 'E',

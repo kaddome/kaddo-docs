@@ -1,3 +1,8 @@
+server:
+    port: 80
+
+baseUrl: http://www.hoozad.com
+
 spring:
     profiles:
         active: prod

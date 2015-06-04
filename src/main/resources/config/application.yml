@@ -22,8 +22,6 @@ spring:
                  clientId: 460033100830561
                  clientSecret: acc280110fa26ea8766d073fb17cacb8
 
-
-
 swagger:
     title: hoozad API
     description: hoozad applications and beyond!

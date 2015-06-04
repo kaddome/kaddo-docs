@@ -2,17 +2,27 @@
 
 angular.module('shared-components', []);
 angular.module('hoozadWidget', ['angucomplete-alt','ngResource','shared-components'])
-    .factory('RequestService', function RequestService(){
-        return {
-            request: function request(config) {
-               //config.url = 'http://localhost:8080' + config.url ;
-               return config;
-            }
-        }
-    })
 
     .config(['$httpProvider', function($httpProvider) {
-        $httpProvider.interceptors.push('RequestService');
+        $httpProvider.defaults.withCredentials = true;
+
+        $httpProvider.interceptors.push(function($rootScope){
+            return {
+                request: function request(config) {
+                   config.url = $rootScope.baseUrl + config.url ;
+                   return config;
+                }
+            }
+        });
+
+    }])
+
+    .run(['$rootScope', '$window', function($rootScope, $window) {
+        $window.addEventListener('message', function(event) {
+            if (~event.origin.indexOf($rootScope.baseUrl) && event.data == 'reload') {
+                $window.location.reload();
+            }
+        });
     }]);
 
 Polymer({
@@ -24,3 +34,5 @@ Polymer({
         }
     }
 });
+
+

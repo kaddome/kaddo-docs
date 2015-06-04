@@ -1,6 +1,8 @@
 server:
     port: 8080
 
+baseUrl: http://localhost:${server.port}
+
 spring:
     profiles:
         active: dev
@@ -13,8 +15,6 @@ spring:
         facebook:
                  clientId: 472039716296566
                  clientSecret: bceb8b649c82f0fc3703cfb9cedcf902
-    mail:
-        baseUrl: http://localhost:${server.port}
 
     thymeleaf:
         mode: XHTML

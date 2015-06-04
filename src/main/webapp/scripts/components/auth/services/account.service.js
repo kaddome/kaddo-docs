@@ -6,7 +6,6 @@ angular.module('shared-components')
             'get': { method: 'GET', params: {}, isArray: false,
                 interceptor: {
                     response: function(response) {
-                        // expose response
                         return response;
                     }
                 }

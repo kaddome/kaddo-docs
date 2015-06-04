@@ -9,6 +9,7 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
             $rootScope.toState = toState;
             $rootScope.toStateParams = toStateParams;
+            $rootScope.baseUrl = '';
 
             $http.get('protected/authentication_check.gif', { ignoreErrors: true })
                 .error(function() {
@@ -89,7 +90,7 @@ angular.module('hoozadApp', ['LocalStorageModule', 'tmh.dynamicLocale',
 
 window.onload = function(e) {
     if(window.opener){
-        window.opener.location.reload();
+        window.opener.postMessage('reload', '*');
         window.close();
     }
 };
