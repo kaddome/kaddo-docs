@@ -19,13 +19,8 @@
             </style>
             <div ng-app="hoozadWidget"  ng-controller="MainController">
                 <div ng-switch="isAuthenticated()">
-                    <div angucomplete-alt="" ng-switch-when="true" id="search" placeholder="Search people"
-                         pause="300" selected-object="selectedPerson"
-                         local-data="people" search-fields="firstName,surname"
-                         title-field="firstName,surname" description-field="twitter"
-                         image-field="pic" minlength="1"
-                         input-class="form-control form-control-small" match-class="highlight"
-                         template-url="/scripts/widget/search-item.html">
+                    <div ng-switch-when="true">
+                        <input type="text" placeholder="Search people" class="form-control form-control-small ng-valid-maxlength ng-dirty ng-valid-parse ng-touched"/>
                     </div>
                     <div ng-switch-when="false">
                         <jh-social type='block' target="_blank" create-auth-link="" external-account-provider="'facebook'">Sign in with Facebook</jh-social>
@@ -38,7 +33,6 @@
     <script src="bower_components/angular/angular.js"/>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"/>
     <script src="bower_components/angular-resource/angular-resource.js"/>
-    <script src="bower_components/angucomplete-alt/angucomplete-alt.js"/>
 
     <script src="scripts/widget/widget.js"/>
     <script src="scripts/components/auth/services/account.service.js"/>
